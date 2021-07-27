@@ -52,3 +52,4 @@ production:
   database: web_reminder_production
   username: web_reminder
   password: <%= ENV['WEB_REMINDER_DATABASE_PASSWORD'] %>
+  socket: /var/lib/mysql/mysql.sock
