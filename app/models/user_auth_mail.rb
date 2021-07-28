@@ -1,0 +1,2 @@
+class UserAuthMail < ApplicationRecord
+end
