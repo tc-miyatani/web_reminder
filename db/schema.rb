@@ -22,11 +22,13 @@ ActiveRecord::Schema.define(version: 2021_07_28_021736) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string "unconfirmed_email"
+    t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["confirmation_token"], name: "index_user_auth_mails_on_confirmation_token", unique: true
     t.index ["email"], name: "index_user_auth_mails_on_email", unique: true
     t.index ["reset_password_token"], name: "index_user_auth_mails_on_reset_password_token", unique: true
+    t.index ["user_id"], name: "index_user_auth_mails_on_user_id"
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -35,4 +37,5 @@ ActiveRecord::Schema.define(version: 2021_07_28_021736) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "user_auth_mails", "users"
 end

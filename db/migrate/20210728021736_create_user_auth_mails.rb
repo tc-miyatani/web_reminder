@@ -18,6 +18,8 @@ class CreateUserAuthMails < ActiveRecord::Migration[6.0]
       t.datetime :confirmation_sent_at
       t.string   :unconfirmed_email # Only if using reconfirmable
 
+      t.references :user, foreign_key: true, optional: true
+
       t.timestamps
     end
 

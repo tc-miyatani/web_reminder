@@ -1,0 +1,2 @@
+module Reminders::MypagesHelper
+end

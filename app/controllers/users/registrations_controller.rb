@@ -5,14 +5,30 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # before_action :configure_account_update_params, only: [:update]
 
   # GET /resource/sign_up
-  # def new
-  #   super
-  # end
+  def new
+    @user_auth_mail = UserAuthMail.new(email: flash[:email] || '')
+  end
 
   # POST /resource
-  # def create
-  #   super
-  # end
+  def create
+    @user_auth_mail = UserAuthMail.new(params.require(:user_auth_mail).permit(:email))
+    
+    unless @user_auth_mail.save
+      flash[:email] = @user_auth_mail.email
+      flash[:errors] = {
+        model_name: @user_auth_mail.class.model_name.human.downcase,
+        full_messages: @user_auth_mail.errors.full_messages
+      }
+      redirect_to action: :new and return
+    end
+    flash[:user_auth_mail] = @user_auth_mail.email
+    redirect_to action: :auth_mail_send
+  end
+
+  def auth_mail_send
+    @email = flash[:user_auth_mail]
+    flash.keep
+  end
 
   # GET /resource/edit
   # def edit
