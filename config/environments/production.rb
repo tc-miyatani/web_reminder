@@ -68,7 +68,6 @@ Rails.application.configure do
 
   config.action_mailer.default_url_options = {
     :host => ENV['APP_HOST'],
-    :port => ENV['APP_PORT'],
     :protocol => ENV['APP_PROTOCOL']
   }
   config.action_mailer.delivery_method = :smtp
