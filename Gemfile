@@ -36,6 +36,7 @@ group :development, :test do
   gem 'capistrano-bundler'
   gem 'capistrano-rails'
   gem 'capistrano3-unicorn'
+  gem 'dotenv-rails'
 end
 
 group :development do
@@ -63,7 +64,10 @@ group :production do
 end
 
 gem 'pry-rails'
-gem 'dotenv-rails'
 gem 'rails-i18n'
 
 gem 'devise'
+
+gem "omniauth-rails_csrf_protection"
+gem 'omniauth', '~>1.9.1'
+gem 'omniauth-line'
