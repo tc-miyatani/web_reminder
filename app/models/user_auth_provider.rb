@@ -1,0 +1,2 @@
+class UserAuthProvider < ApplicationRecord
+end
