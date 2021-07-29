@@ -43,9 +43,9 @@ Rails.application.configure do
   }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    :address => 'smtp.gmail.com',
+    :address => 'smtp.zoho.com',
     :port => 587,
-    :domain => 'smtp.gmail.com',
+    :domain => 'web-reminder.jp',
     :user_name => ENV['MAIL_FROM'],
     :password => ENV['MAIL_PASSWORD'],
     :authentication => :plain,

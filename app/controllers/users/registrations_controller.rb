@@ -13,7 +13,30 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def create
     @user_auth_mail = UserAuthMail.new(params.require(:user_auth_mail).permit(:email))
     
-    unless @user_auth_mail.save
+    is_save = nil
+    begin
+      ActiveRecord::Base.transaction(joinable: false, requires_new: true) do
+        is_save = @user_auth_mail.save # ここでメールが送信される
+      end
+      is_mail_send = true
+    rescue => e
+      is_mail_send = false
+      logger.debug("mail send failed. because of #{e}")
+    end    
+
+    unless is_mail_send
+      # メール送信エラー
+      # ActiveRecord::Rollback
+      flash[:email] = @user_auth_mail.email
+      flash[:errors] = {
+        model_name: '仮登録アカウント',
+        full_messages: ['申し訳ございません、メールの送信に失敗しました。']
+      }
+      redirect_to action: :new and return
+    end
+
+    unless is_save
+      # バリデーションエラー
       flash[:email] = @user_auth_mail.email
       flash[:errors] = {
         model_name: @user_auth_mail.class.model_name.human.downcase,
@@ -21,6 +44,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       }
       redirect_to action: :new and return
     end
+
     flash[:user_auth_mail] = @user_auth_mail.email
     redirect_to action: :auth_mail_send
   end
