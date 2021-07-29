@@ -10,6 +10,14 @@
   </head>
 
   <body>
+    <header>
+      <%- if user_auth_mail_signed_in? %>
+        <%= link_to 'ログアウト', destroy_user_auth_mail_session_path, method: :delete %>
+      <% else %>
+        <%= link_to '新規登録', new_user_auth_mail_registration_path %>
+        <%= link_to 'ログイン', new_user_auth_mail_session_path %>
+      <% end %>
+    </header>
     <%= yield %>
   </body>
 </html>
