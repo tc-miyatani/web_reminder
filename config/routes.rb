@@ -9,5 +9,12 @@ Rails.application.routes.draw do
     patch 'users/confirmation',   to: 'users/confirmations#confirm'
     get   'users/complete',       to: 'users/confirmations#complete'
   end
+
+  devise_for :user_auth_providers, controllers: {
+    omniauth_callbacks: 'users/omniauth_callbacks'
+  }, path: 'users'
+
   root to: 'reminders/mypages#index'
+  resource :user, only: [:edit, :update], controller: 'reminders/mypages',
+                  path: 'users/profile', as: 'user_profile'
 end
