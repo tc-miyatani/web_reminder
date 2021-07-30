@@ -19,5 +19,8 @@
       <% end %>
     </header>
     <%= yield %>
+    <footer>
+      mail: <%= ENV['MAIL_FROM'] %>
+    </footer>
   </body>
 </html>
