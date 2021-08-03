@@ -58,7 +58,7 @@ class ReminderService
     end
     # 来週
     next_week_wday = weekdays.min
-    plus_day = this_week_wday + 7 - today_wday
+    plus_day = next_week_wday + 7 - today_wday
     next_time = next_time.since(plus_day.days)
     next_time.strftime('%Y-%m-%d %H:%M')
   end
