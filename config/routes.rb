@@ -17,4 +17,9 @@ Rails.application.routes.draw do
   root to: 'reminders/mypages#index'
   resource :user, only: [:edit, :update], controller: 'reminders/mypages',
                   path: 'users/profile', as: 'user_profile'
+
+  resources :reminders, only: [:new], controller: 'reminders/mains'
+  scope :api, format: 'json' do
+    resources :reminders, only: [:create], controller: 'reminders/mains'
+  end
 end

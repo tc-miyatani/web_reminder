@@ -1,0 +1,2 @@
+module Reminders::MainsHelper
+end

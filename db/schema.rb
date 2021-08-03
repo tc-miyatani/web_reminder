@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_29_073336) do
+ActiveRecord::Schema.define(version: 2021_08_03_020151) do
+
+  create_table "reminders", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.text "message", null: false
+    t.datetime "notification_time", null: false
+    t.text "repeat_rule", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_reminders_on_user_id"
+  end
 
   create_table "user_auth_mails", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -47,6 +57,7 @@ ActiveRecord::Schema.define(version: 2021_07_29_073336) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "reminders", "users"
   add_foreign_key "user_auth_mails", "users"
   add_foreign_key "user_auth_providers", "users"
 end

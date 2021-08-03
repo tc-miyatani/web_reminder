@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width">
     <title>WebReminder</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag 'application', media: 'all' %>
+    <%= javascript_pack_tag 'application' %>
   </head>
-
   <body>
     <header>
-      <%- if user_auth_mail_signed_in? || user_auth_provider_signed_in? %>
+      <%- if user_signed_in? %>
         <%= link_to 'ログアウト', destroy_user_auth_mail_session_path, method: :delete %>
       <% else %>
         <%= link_to '新規登録', new_user_auth_mail_registration_path %>
