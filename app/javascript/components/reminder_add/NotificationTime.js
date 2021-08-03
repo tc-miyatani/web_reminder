@@ -8,7 +8,7 @@ import {
   KeyboardTimePicker,
 } from '@material-ui/pickers';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   container: {
     display: 'flex',
     flexWrap: 'wrap',
@@ -29,7 +29,8 @@ const NotificationTime = () => {
         <KeyboardTimePicker
           margin='normal'
           id='notification-time'
-          name='notification-time'
+          name='notification_time'
+          format="HH:mm"
           label='通知時間'
           value={selectedTime}
           onChange={handleTimeChange}

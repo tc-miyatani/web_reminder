@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     display: 'flex',
     flexWrap: 'wrap',
@@ -52,7 +52,7 @@ const NotificationWeekdays = () => {
           <Button variant={getVariant(weekdays[6])} onClick={handlesWeekdaysChange[6]}>土</Button>
         </ButtonGroup>
       </div>
-      <select name="notification-weekdays" multiple className={classes.hidden} ref={hiddenSelect}>
+      <select name="notification_weekdays[]" multiple className={classes.hidden} ref={hiddenSelect}>
         <option value="0">0</option>
         <option value="1">1</option>
         <option value="2">2</option>

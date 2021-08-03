@@ -38,7 +38,7 @@ const RepeatType = (props) => {
         <Select
           labelId="repeat-type-label"
           id="repeat-type"
-          name="repeat-type"
+          name="repeat_type"
           value={ruleType}
           onChange={handleChange}
         >

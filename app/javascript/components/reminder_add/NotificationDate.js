@@ -8,7 +8,7 @@ import {
   KeyboardDatePicker,
 } from '@material-ui/pickers';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   container: {
     display: 'flex',
     flexWrap: 'wrap',
@@ -31,7 +31,7 @@ const NotificationDate = () => {
         format="yyyy-MM-dd"
         margin="normal"
         id="notification-date"
-        name="notification-date"
+        name="notification_date"
         label="通知日"
         value={selectedDate}
         onChange={handleDateChange}

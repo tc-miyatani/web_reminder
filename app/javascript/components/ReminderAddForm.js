@@ -1,6 +1,5 @@
 import React from "react"
 import { makeStyles } from '@material-ui/core/styles';
-import { useTheme } from '@material-ui/core/styles';
 import {
   CssBaseline, Container,
   Card, CardHeader, CardContent, CardActions,
@@ -10,10 +9,11 @@ import {
 } from '@material-ui/core';
 import RepeatType from './reminder_add/RepeatType';
 import NotificationTime from './reminder_add/NotificationTime';
-import axios from 'axios';
 import ButtonToggleLoading from "./common/ButtonToggleLoading";
 
-const useStyles = makeStyles((theme) => ({
+import axios from './modules/axios_with_csrf';
+
+const useStyles = makeStyles(() => ({
   container: {
     width: '100%',
     maxWidth: '600px',
@@ -25,9 +25,6 @@ const useStyles = makeStyles((theme) => ({
 
 const ReminderAddForm = () => {
   const classes = useStyles();
-  const theme = useTheme();
-
-  const sleep = msec => new Promise(resolve => setTimeout(resolve, msec));
 
   const [addResponse, setAddResponse] = React.useState({});
   const [isLoading, setIsLoading] = React.useState(false);
@@ -37,16 +34,25 @@ const ReminderAddForm = () => {
     const formData = new FormData(formEl);
     console.log(formData);
     setIsLoading(true);
-    // const res = await axios.post('/reminders/', {body: formData });
-    // console.log(res);
-    // console.log(res.data);
-    setAddResponse({msg: '登録に成功しました！'});
-    await sleep(1000);
-    setIsLoading(false);
-    setOpen(true);
+    axios.post('/api/reminders', formData)
+      .then(res => {
+        if (res.data?.is_success){
+          setAddResponse({msg: res.data?.msg, is_success: res.data.is_success});
+        } else {
+          const err_msg = res.data?.msg
+                        + res.data?.error_messages?.join('!')
+                        + '!';
+          setAddResponse({msg: err_msg, is_success: res.data.is_success});
+        }
+        setIsLoading(false);
+        setOpen(true);
+      });
   };
   const handleClose = () => {
     setOpen(false);
+    if (addResponse?.is_success) {
+      location.href = '/';
+    }
   };
 
   const [repeatType, setRepeatType] = React.useState('');
