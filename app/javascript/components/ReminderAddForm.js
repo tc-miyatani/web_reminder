@@ -46,6 +46,11 @@ const ReminderAddForm = () => {
         }
         setIsLoading(false);
         setOpen(true);
+      })
+      .catch(error => {
+        setAddResponse({msg: '通信エラーが発生しました。', is_success: false});
+        setIsLoading(false);
+        setOpen(true);
       });
   };
   const handleClose = () => {
