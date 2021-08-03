@@ -3,6 +3,13 @@ class Reminders::MainsController < ApplicationController
   end
 
   def create
+    if params[:repeat_type] == 'repeat-weekly' && params[:notification_weekdays].blank?
+      render json: {
+        is_success: false,
+        msg: '登録に失敗しました！',
+        error_messages: ['曜日を選択してください！']
+      } and return
+    end
     reminder = Reminder.new(reminder_params)
     unless reminder.valid?
       render json: {
