@@ -6,6 +6,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import RepeatTypeContents from "./RepeatTypeContents";
+import { PROPS_ATTR } from "react_ujs";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -19,12 +20,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const RepeatType = () => {
+const RepeatType = (props) => {
   const classes = useStyles();
 
   const [ruleType, setRuleType] = React.useState('');
   const handleChange = (event) => {
-    setRuleType(event.target.value);
+    const value = event.target.value;
+    setRuleType(value);
+    if (!props.onChange) { return; }
+    props.onChange(value);
   };
 
   return (

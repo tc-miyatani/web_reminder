@@ -7,11 +7,11 @@ import {
   Divider, TextField, Button,
   Dialog, DialogActions, DialogContent,
   DialogContentText, DialogTitle,
-  CircularProgress
 } from '@material-ui/core';
 import RepeatType from './reminder_add/RepeatType';
 import NotificationTime from './reminder_add/NotificationTime';
 import axios from 'axios';
+import ButtonToggleLoading from "./common/ButtonToggleLoading";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -23,26 +23,13 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const ReminderAddButton = (props) => {
-  if (props.isLoading) {
-    return (
-      <CircularProgress />
-    );
-  } else {
-    return (
-      <Button variant="contained" size="small" color="primary" onClick={props.onClick}>
-        登録
-      </Button>
-    );
-  }
-};
-
 const ReminderAddForm = () => {
   const classes = useStyles();
   const theme = useTheme();
 
   const sleep = msec => new Promise(resolve => setTimeout(resolve, msec));
 
+  const [addResponse, setAddResponse] = React.useState({});
   const [isLoading, setIsLoading] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const handleOpen = async () => {
@@ -53,12 +40,18 @@ const ReminderAddForm = () => {
     // const res = await axios.post('/reminders/', {body: formData });
     // console.log(res);
     // console.log(res.data);
+    setAddResponse({msg: '登録に成功しました！'});
     await sleep(1000);
     setIsLoading(false);
     setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const [repeatType, setRepeatType] = React.useState('');
+  const handleRepeatTypeChange = (repeatTypeValue) => {
+    setRepeatType(repeatTypeValue);
   };
 
   return (
@@ -69,13 +62,21 @@ const ReminderAddForm = () => {
           <CardHeader title="リマインダー作成フォーム" />
           <CardContent>
             <form id="reminder-add-from" noValidate autoComplete="off">
-              <RepeatType /><br />
-              <NotificationTime />
-              <TextField name="message" label="通知メッセージ" required fullWidth />
+              <RepeatType onChange={handleRepeatTypeChange} /><br />
+              { repeatType !== '' &&
+                <React.Fragment>
+                  <NotificationTime />
+                  <TextField name="message" label="通知メッセージ" required fullWidth />
+                </React.Fragment>
+              }
             </form>
           </CardContent>
           <CardActions>
-            <ReminderAddButton isLoading={isLoading} onClick={handleOpen} />
+            { repeatType !== '' &&
+              <ButtonToggleLoading isLoading={isLoading} onClick={handleOpen}>
+                登録
+              </ButtonToggleLoading>
+            }
           </CardActions>
         </Card>
       </Container>
@@ -89,7 +90,7 @@ const ReminderAddForm = () => {
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
-            登録に成功しました！
+            {addResponse.msg}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
