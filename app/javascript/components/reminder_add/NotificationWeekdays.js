@@ -38,9 +38,9 @@ const NotificationWeekdays = () => {
 
   return (
     <React.Fragment>
-      <span className={classes.title}>
+      <div className={classes.title}>
         通知曜日
-      </span>      
+      </div>      
       <div className={classes.root}>
         <ButtonGroup aria-label="通知曜日" color="primary">
           <Button variant={getVariant(weekdays[0])} onClick={handlesWeekdaysChange[0]}>日</Button>
