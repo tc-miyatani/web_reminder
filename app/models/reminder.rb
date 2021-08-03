@@ -10,7 +10,7 @@ class Reminder < ApplicationRecord
   validate :cannot_reminder_to_past
 
   def cannot_reminder_to_past
-    if notification_time < Time.zone.now
+    if ReminderService.past?(notification_time)
       errors.add(:notification_time, ': 過去の日時に通知することはできません')
     end
   end
