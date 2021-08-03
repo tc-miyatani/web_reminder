@@ -11,7 +11,7 @@ class Reminders::MainsController < ApplicationController
       } and return
     end
     reminder = Reminder.new(reminder_params)
-    unless reminder.valid?
+    unless reminder.save
       render json: {
         is_success: false,
         msg: '登録に失敗しました！',
