@@ -33,6 +33,13 @@ const ReminderAddForm = () => {
     const formEl = document.getElementById('reminder-add-from');
     const formData = new FormData(formEl);
     console.log(formData);
+
+    if (formData.getAll('notification_weekdays').length === 0) {
+      setAddResponse({msg: '曜日を選択してください！', is_success: false});
+      setOpen(true);
+      return;
+    }
+
     setIsLoading(true);
     axios.post('/api/reminders', formData)
       .then(res => {
