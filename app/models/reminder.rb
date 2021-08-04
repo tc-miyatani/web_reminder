@@ -28,4 +28,20 @@ class Reminder < ApplicationRecord
     json_data['repeat_rule'] = JSON.parse(json_data['repeat_rule'])
     json_data
   end
+
+  def send_reminder
+    user = self.user
+    if user.user_auth_mail.present?
+      ReminderMailer.send_reminder(self)
+      return
+    end
+
+    if user.user_auth_provider.blank?
+      return
+    end
+
+    if user.user_auth_provider.provider_name == 'line'
+      LineMessage.send_reminder(self)
+    end
+  end
 end
