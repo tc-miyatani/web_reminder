@@ -13,10 +13,14 @@ class ReminderService
     when 'repeat-daily' then
       notification_datetime = daily_next_time(form_data['notification_time'])
     when 'repeat-weekly' then
-      notification_datetime = weekly_next_time(
-                                form_data['notification_time'],
-                                form_data['notification_weekdays']
-                              )
+      if form_data['notification_weekdays'].blank?
+        notification_datetime = Time.current.since(100.years) # エラーになるので適当な値(未来)
+      else
+        notification_datetime = weekly_next_time(
+                                  form_data['notification_time'],
+                                  form_data['notification_weekdays']
+                                )   
+      end
       repeat_rule[:weekdays] = form_data[:notification_weekdays]
     end
     form_data

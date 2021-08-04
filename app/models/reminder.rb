@@ -8,10 +8,18 @@ class Reminder < ApplicationRecord
     validates :user
   end
   validate :cannot_reminder_to_past
+  validate :cannot_empty_weekdays_repeat_weekly
 
   def cannot_reminder_to_past
-    if ReminderService.past?(notification_time)
+    if notification_time.present? && ReminderService.past?(notification_time)
       errors.add(:notification_time, ': 過去の日時に通知することはできません')
+    end
+  end
+
+  def cannot_empty_weekdays_repeat_weekly
+    rule = JSON.parse(repeat_rule, symbolize_names: true)
+    if rule[:repeat_type] == 'repeat-weekly' && rule[:weekdays].blank?
+      errors.add(:notification_time, ': 曜日を選択してください')
     end
   end
 
