@@ -3,6 +3,8 @@ class ReminderService
   # Rails内の日付計算処理はこのクラスに集約させる
   # テストしやすいようにメソッドを分離し、かつ、nowをオプション引数にしておく
 
+  WDAYS = [:sunday, :monday, :tuesday, :wednesday, :thursday, :friday, :saturday]
+
   # formから送られてきたデータをDBに保存する形式に変換する
   # その際に直近の通知日時(notification_time)を算出する
   def self.form_data_to_model_data(form_data)
@@ -43,27 +45,15 @@ class ReminderService
 
   # 指定曜日・指定時刻の直近の日時
   def self.weekly_next_time(time_str, weekdays_str, now=Time.current)
-    today_wday = now.wday
-    weekdays = weekdays_str.map{ |wday| wday.to_i }
-    # 今日
-    if weekdays.include?(today_wday)
-      next_time = time_of_day(time_str, now)
-      if next_time > now
-        return next_time.strftime('%Y-%m-%d %H:%M')
-      end
-    end
-    # 今週
-    next_time = time_of_day(time_str, now)
-    this_week_wday = weekdays.filter{|wday| wday > today_wday }&.min # なければnil
-    if this_week_wday.present?
-      plus_day = this_week_wday - today_wday
-      next_time = next_time.since(plus_day.days)
-      return next_time.strftime('%Y-%m-%d %H:%M')
-    end
-    # 来週
-    next_week_wday = weekdays.min
-    plus_day = next_week_wday + 7 - today_wday
-    next_time = next_time.since(plus_day.days)
+    # 指定時刻を過ぎていなければ昨日を基準日に、過ぎていれば今日を基準日にする
+    base_day = time_of_day(time_str, now) > now ? now.yesterday : now
+    # 複数の選択している曜日の直近の指定日時を計算し(map)、その中から現在日時以降の(filter)、直近の日時(min)を取得
+    next_time = weekdays_str.map{ |wday|
+      time_of_day(
+        time_str,
+        base_day.next_occurring(WDAYS[wday.to_i]) # 直近の指定曜日(基準日と同じ曜日なら1週間後)
+      )
+    }.filter{|dt| dt > now}.min
     next_time.strftime('%Y-%m-%d %H:%M')
   end
 

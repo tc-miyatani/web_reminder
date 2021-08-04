@@ -2,9 +2,6 @@ require 'rails_helper'
 
 RSpec.describe "ReminderServices" do
   describe '日付計算' do
-    before do
-    end
-
     context 'daily_next_time' do
       it 'まだその時刻を過ぎていない場合はその日のその時刻を返す' do
         now = Time.current.change(hour: 0, min: 1)
