@@ -34,7 +34,7 @@ class ReminderService
   # 指定時刻の直近の日時(今日その時刻を過ぎているなら明日)
   # time_str: '%H:%M'形式の文字列(24時間表記)
   def self.daily_next_time(time_str, now=Time.current)
-    next_time = time_of_day(time_str)
+    next_time = time_of_day(time_str, now)
     if next_time < now
       next_time = next_time.tomorrow
     end
@@ -47,13 +47,13 @@ class ReminderService
     weekdays = weekdays_str.map{ |wday| wday.to_i }
     # 今日
     if weekdays.include?(today_wday)
-      next_time = time_of_day(time_str)
+      next_time = time_of_day(time_str, now)
       if next_time > now
         return next_time.strftime('%Y-%m-%d %H:%M')
       end
     end
     # 今週
-    next_time = time_of_day(time_str)
+    next_time = time_of_day(time_str, now)
     this_week_wday = weekdays.filter{|wday| wday > today_wday }&.min # なければnil
     if this_week_wday.present?
       plus_day = this_week_wday - today_wday
