@@ -10,7 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_03_020151) do
+ActiveRecord::Schema.define(version: 2021_08_04_014044) do
+
+  create_table "notification_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.datetime "notification_time", null: false
+    t.text "message", null: false
+    t.string "provider_name", null: false
+    t.string "provider_id", null: false
+    t.integer "reminder_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["notification_time"], name: "index_notification_logs_on_notification_time"
+    t.index ["provider_id", "provider_name", "notification_time"], name: "idx_notification_logs_provider_id_name_time", unique: true
+  end
 
   create_table "reminders", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.text "message", null: false
