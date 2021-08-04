@@ -66,9 +66,9 @@ end
 gem 'pry-rails'
 gem 'rails-i18n'
 gem 'react-rails'
+gem 'whenever' # cron setting
 
 gem 'devise'
-
 gem "omniauth-rails_csrf_protection"
 gem 'omniauth', '~>1.9.1'
 gem 'omniauth-line'
