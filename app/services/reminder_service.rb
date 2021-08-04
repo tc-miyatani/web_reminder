@@ -61,10 +61,4 @@ class ReminderService
   def self.time_of_day(time_str, now=Time.current)
     Time.zone.parse(now.strftime('%Y-%m-%d') + ' ' + time_str)
   end
-
-  # 指定時刻が過去かどうか
-  # time: Timeオブジェクト
-  def self.past?(time, now=Time.current)
-    time <= now
-  end
 end

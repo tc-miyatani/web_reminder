@@ -45,19 +45,5 @@ RSpec.describe "ReminderServices" do
         expect(result).to eq now.since(3.days).strftime('%Y-%m-%d %H:%M') # 3.days: 1(mon)+7-5(fri)
       end
     end
-
-    context 'past?' do
-      it '過去ならtrueを返す' do
-        now = Time.current
-        past = now.ago(Random.rand(1..60*24*365).minutes)
-        expect(ReminderService.past?(past, now)).to eq true
-      end
-
-      it '未来ならfalseを返す' do
-        now = Time.current
-        future = now.since(Random.rand(1..60*24*365).minutes)
-        expect(ReminderService.past?(future, now)).to eq false
-      end
-    end
   end
 end

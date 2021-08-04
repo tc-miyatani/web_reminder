@@ -11,7 +11,7 @@ class Reminder < ApplicationRecord
   validate :cannot_empty_weekdays_repeat_weekly
 
   def cannot_reminder_to_past
-    if notification_time.present? && ReminderService.past?(notification_time)
+    if notification_time.present? && notification_time.past?
       errors.add(:notification_time, ': 過去の日時に通知することはできません')
     end
   end
