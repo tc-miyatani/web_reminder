@@ -37,6 +37,9 @@ group :development, :test do
   gem 'capistrano-rails'
   gem 'capistrano3-unicorn'
   gem 'dotenv-rails'
+  gem 'rspec-rails'
+  gem 'factory_bot_rails'
+  gem 'faker'
 end
 
 group :development do
