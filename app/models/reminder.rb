@@ -11,7 +11,7 @@ class Reminder < ApplicationRecord
   with_options presence: true do
     validates :message
     validates :notification_datetime
-    validates :repeat_type_id
+    validates :repeat_type_id, inclusion: { in: RepeatType.pluck(:id) }
     validates :user
   end
   validate :cannot_reminder_to_past
@@ -59,10 +59,9 @@ class Reminder < ApplicationRecord
   # フォーム・レスポンス関係のメソッド
   # ---------------------------------------------------------------------------------------------
 
-  # TODO: 必要か検討する
   def to_response_json
     json_data = JSON.parse(self.to_json, symbolize_names: true)
-    # TODO: weekdaysが含まれるか確認
+    # TODO: weekdaysが含まれないので後で修正
     json_data
   end
 
@@ -112,5 +111,13 @@ class Reminder < ApplicationRecord
       next_time = ReminderService.calc_next_time(self, little_later)
       self.update(notification_datetime: next_time)
     end
+  end
+
+  def self.find_all_should_send
+    self.includes([
+          :notification_weekdays,
+          user: [:user_auth_provider, :user_auth_mail]
+        ])
+        .where('notification_datetime < ?', Time.current)
   end
 end

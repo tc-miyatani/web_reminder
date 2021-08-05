@@ -22,7 +22,7 @@ class ReminderService
                                 )   
       end
     else
-      railse RuntimeError, '不正なリピートタイプです'
+      raise RuntimeError.new('不正なリピートタイプです')
     end
     next_time
   end
