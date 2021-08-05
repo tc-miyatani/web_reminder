@@ -68,6 +68,7 @@ end
 
 gem 'pry-rails'
 gem 'rails-i18n'
+gem 'active_hash'
 gem 'react-rails'
 gem 'whenever' # cron setting
 

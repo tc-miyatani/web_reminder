@@ -19,7 +19,7 @@ RSpec.describe Reminder, type: :model do
       it 'repeat_typeが繰り返し(毎週○曜日)で曜日が選択されていると登録できること' do
         repeat_rule = {
           repeat_type: 'repeat-weekly',
-          weekdays: ['0']
+          notification_weekdays: ['0']
         }
         @reminder.repeat_rule = repeat_rule.to_json
         expect(@reminder).to be_valid
@@ -48,7 +48,7 @@ RSpec.describe Reminder, type: :model do
       it 'repeat_typeが繰り返し(毎週○曜日)で曜日が選択されていないと登録できないこと' do
         repeat_rule = {
           repeat_type: 'repeat-weekly',
-          weekdays: []
+          notification_weekdays: []
         }
         @reminder.repeat_rule = repeat_rule.to_json
         @reminder.valid?

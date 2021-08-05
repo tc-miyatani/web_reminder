@@ -1,0 +1,2 @@
+class NotificationWeekday < ApplicationRecord
+end

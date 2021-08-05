@@ -1,9 +1,12 @@
 class Reminders::MainsController < ApplicationController
+  before_action :authenticate_user!
+
   def new
   end
 
   def create
     reminder = Reminder.new(reminder_params)
+    reminder.notification_datetime = ReminderService.calc_next_time(reminder)
     unless reminder.save
       render json: {
         is_success: false,
@@ -21,8 +24,15 @@ class Reminders::MainsController < ApplicationController
   private
 
   def reminder_params
-    ReminderService
-      .form_data_to_model_data(params)
-      .merge(user_id: current_user.id)
+    params.require(:reminder)
+          .permit(
+            :repeat_type_id, :message,
+            :notification_time,
+            :notification_date,
+            notification_weekdays_attributes: [:weekday_id]
+          )
+          .merge(
+            user_id: current_user.id
+          )
   end
 end

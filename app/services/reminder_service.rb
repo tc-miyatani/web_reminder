@@ -5,32 +5,26 @@ class ReminderService
 
   WDAYS = [:sunday, :monday, :tuesday, :wednesday, :thursday, :friday, :saturday]
 
-  # formから送られてきたデータをDBに保存する形式に変換する
-  # その際に直近の通知日時(notification_time)を算出する
-  def self.form_data_to_model_data(form_data)
-    repeat_rule = { repeat_type: form_data[:repeat_type] }
-    case form_data[:repeat_type]
-    when 'once' then
-      notification_datetime = form_data['notification_date'] + ' ' + form_data['notification_time']
-    when 'repeat-daily' then
-      notification_datetime = daily_next_time(form_data['notification_time'])
-    when 'repeat-weekly' then
-      if form_data['notification_weekdays'].blank?
-        notification_datetime = Time.current.since(100.years) # エラーになるので適当な値(未来)
+  # 次の通知日時を算出して返す
+  def self.calc_next_time(reminder, base_time=Time.current)
+    case reminder.repeat_type
+    when RepeatType.find_by(name: 'once') then
+      next_time = reminder.notification_date + ' ' + reminder.notification_time
+    when RepeatType.find_by(name: 'repeat-daily') then
+      next_time = self.daily_next_time(reminder.notification_time)
+    when RepeatType.find_by(name: 'repeat-weekly') then
+      if reminder.weekdays.blank?
+        next_time = nil
       else
-        notification_datetime = weekly_next_time(
-                                  form_data['notification_time'],
-                                  form_data['notification_weekdays']
+        next_time = self.weekly_next_time(
+                                  reminder.notification_time,
+                                  reminder.weekdays
                                 )   
       end
-      repeat_rule[:weekdays] = form_data[:notification_weekdays]
+    else
+      railse RuntimeError, '不正なリピートタイプです'
     end
-    form_data
-      .permit(:message)
-      .merge(
-        notification_time: notification_datetime,
-        repeat_rule: repeat_rule.to_json
-      )
+    next_time
   end
 
   # 指定時刻の直近の日時(今日その時刻を過ぎているなら明日)

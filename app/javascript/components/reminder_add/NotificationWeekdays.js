@@ -52,7 +52,7 @@ const NotificationWeekdays = () => {
           <Button variant={getVariant(weekdays[6])} onClick={handlesWeekdaysChange[6]}>土</Button>
         </ButtonGroup>
       </div>
-      <select name="notification_weekdays[]" multiple className={classes.hidden} ref={hiddenSelect}>
+      <select name="reminder[notification_weekdays_attributes][][weekday_id]" multiple className={classes.hidden} ref={hiddenSelect}>
         <option value="0">0</option>
         <option value="1">1</option>
         <option value="2">2</option>

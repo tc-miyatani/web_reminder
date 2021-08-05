@@ -38,13 +38,13 @@ const RepeatType = (props) => {
         <Select
           labelId="repeat-type-label"
           id="repeat-type"
-          name="repeat_type"
+          name="reminder[repeat_type_id]"
           value={ruleType}
           onChange={handleChange}
         >
-          <MenuItem value='once'>1回きり</MenuItem>
-          <MenuItem value='repeat-daily'>繰り返し(毎日)</MenuItem>
-          <MenuItem value='repeat-weekly'>繰り返し(毎週○曜日)</MenuItem>
+          <MenuItem value='1'>1回きり</MenuItem>
+          <MenuItem value='2'>繰り返し(毎日)</MenuItem>
+          <MenuItem value='3'>繰り返し(毎週○曜日)</MenuItem>
           {/* <MenuItem value='repeat-monthly'>繰り返し(毎月○日)</MenuItem> */}
           {/* <MenuItem value='repeat-every-days'>繰り返し(○日毎)</MenuItem> */}
           {/* <MenuItem value='repeat-every-weekly-days'>繰り返し(指定曜日○日毎)</MenuItem> */}
