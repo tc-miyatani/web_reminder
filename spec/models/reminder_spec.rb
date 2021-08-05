@@ -11,17 +11,14 @@ RSpec.describe Reminder, type: :model do
         expect(@reminder).to be_valid
       end
 
-      it 'notification_timeが未来だと登録できないこと' do
-        @reminder.notification_time = Time.current.since(1.minutes)
+      it 'notification_datetimeが未来だと登録できること' do
+        @reminder.notification_datetime = Time.current.since(1.minutes)
         expect(@reminder).to be_valid
       end
 
       it 'repeat_typeが繰り返し(毎週○曜日)で曜日が選択されていると登録できること' do
-        repeat_rule = {
-          repeat_type: 'repeat-weekly',
-          notification_weekdays: ['0']
-        }
-        @reminder.repeat_rule = repeat_rule.to_json
+        @reminder.repeat_type = RepeatType.find_by(name: 'repeat-weekly')
+        @reminder.weekdays = [0]
         expect(@reminder).to be_valid
       end
     end
@@ -33,26 +30,23 @@ RSpec.describe Reminder, type: :model do
         expect(@reminder.errors.full_messages).to include("Messageを入力してください")
       end
 
-      it 'notification_timeが空では登録できないこと' do
-        @reminder.notification_time = nil
+      it 'notification_datetimeが空では登録できないこと' do
+        @reminder.notification_datetime = nil
         @reminder.valid?
-        expect(@reminder.errors.full_messages).to include("Notification timeを入力してください")
+        expect(@reminder.errors.full_messages).to include("Notification datetimeを入力してください")
       end
 
       it 'notification_timeが過去だと登録できないこと' do
-        @reminder.notification_time = Time.current.ago(1.minutes)
+        @reminder.notification_datetime = Time.current.ago(1.minutes)
         @reminder.valid?
-        expect(@reminder.errors.full_messages).to include("Notification time: 過去の日時に通知することはできません")
+        expect(@reminder.errors.full_messages).to include("Notification datetime: 過去の日時に通知することはできません")
       end
 
       it 'repeat_typeが繰り返し(毎週○曜日)で曜日が選択されていないと登録できないこと' do
-        repeat_rule = {
-          repeat_type: 'repeat-weekly',
-          notification_weekdays: []
-        }
-        @reminder.repeat_rule = repeat_rule.to_json
+        @reminder.repeat_type = RepeatType.find_by(name: 'repeat-weekly')
+        @reminder.weekdays = []
         @reminder.valid?
-        expect(@reminder.errors.full_messages).to include("Notification time: 曜日を選択してください")
+        expect(@reminder.errors.full_messages).to include("Notification datetime: 曜日を選択してください")
       end
     end
   end
