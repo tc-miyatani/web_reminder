@@ -6,13 +6,13 @@ import NotificationWeekdays from "./NotificationWeekdays";
 
 const RepeatTypeContents = (props) => {
   switch (props.repeatType) {
-    case 'once':
+    case '1':
       return (
         <NotificationDate />
       );
-    case 'repeat-daily':
+    case '2':
       break;
-    case 'repeat-weekly':
+    case '3':
       return (
         <NotificationWeekdays />
       );

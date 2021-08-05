@@ -31,7 +31,7 @@ const NotificationDate = () => {
         format="yyyy-MM-dd"
         margin="normal"
         id="notification-date"
-        name="notification_date"
+        name="reminder[notification_date]"
         label="通知日"
         value={selectedDate}
         onChange={handleDateChange}

@@ -10,12 +10,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_03_020151) do
+ActiveRecord::Schema.define(version: 2021_08_05_122850) do
+
+  create_table "notification_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.datetime "notification_time", null: false
+    t.text "message", null: false
+    t.string "provider_name", null: false
+    t.string "provider_id", null: false
+    t.integer "reminder_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["notification_time"], name: "index_notification_logs_on_notification_time"
+    t.index ["provider_id", "provider_name", "notification_time"], name: "idx_notification_logs_provider_id_name_time", unique: true
+  end
+
+  create_table "notification_weekdays", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "weekday_id", null: false
+    t.bigint "reminder_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["reminder_id"], name: "index_notification_weekdays_on_reminder_id"
+  end
 
   create_table "reminders", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.text "message", null: false
-    t.datetime "notification_time", null: false
-    t.text "repeat_rule", null: false
+    t.datetime "notification_datetime", null: false
+    t.integer "repeat_type_id", null: false
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -57,6 +77,7 @@ ActiveRecord::Schema.define(version: 2021_08_03_020151) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "notification_weekdays", "reminders"
   add_foreign_key "reminders", "users"
   add_foreign_key "user_auth_mails", "users"
   add_foreign_key "user_auth_providers", "users"

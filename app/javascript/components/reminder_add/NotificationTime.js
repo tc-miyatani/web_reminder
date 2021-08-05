@@ -29,7 +29,7 @@ const NotificationTime = () => {
         <KeyboardTimePicker
           margin='normal'
           id='notification-time'
-          name='notification_time'
+          name='reminder[notification_time]'
           format="HH:mm"
           label='通知時間'
           value={selectedTime}

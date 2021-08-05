@@ -12,4 +12,10 @@ module ApplicationHelper
   def user_signed_in?
     user_auth_mail_signed_in? || user_auth_provider_signed_in?
   end
+
+  def authenticate_user!
+    unless user_signed_in?
+      redirect_to new_user_auth_mail_session_path
+    end
+  end
 end

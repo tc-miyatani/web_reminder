@@ -37,6 +37,9 @@ group :development, :test do
   gem 'capistrano-rails'
   gem 'capistrano3-unicorn'
   gem 'dotenv-rails'
+  gem 'rspec-rails'
+  gem 'factory_bot_rails'
+  gem 'faker'
 end
 
 group :development do
@@ -65,10 +68,11 @@ end
 
 gem 'pry-rails'
 gem 'rails-i18n'
+gem 'active_hash'
 gem 'react-rails'
+gem 'whenever' # cron setting
 
 gem 'devise'
-
 gem "omniauth-rails_csrf_protection"
 gem 'omniauth', '~>1.9.1'
 gem 'omniauth-line'

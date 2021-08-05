@@ -35,8 +35,8 @@ const ReminderAddForm = () => {
     console.log(formData);
 
     if (
-      formData.get('repeat_type') === 'repeat-weekly' &&
-      formData.getAll('notification_weekdays[]').length === 0
+      formData.get('reminder[repeat_type_id]') === '3' &&
+      formData.getAll('reminder[notification_weekdays_attributes][][weekday_id]').length === 0
     ) {
       setAddResponse({msg: '曜日を選択してください！', is_success: false});
       setOpen(true);
@@ -88,7 +88,7 @@ const ReminderAddForm = () => {
               { repeatType !== '' &&
                 <React.Fragment>
                   <NotificationTime />
-                  <TextField name="message" label="通知メッセージ" required fullWidth />
+                  <TextField name="reminder[message]" label="通知メッセージ" required fullWidth />
                 </React.Fragment>
               }
             </form>
