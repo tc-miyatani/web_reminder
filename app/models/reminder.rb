@@ -125,6 +125,6 @@ class Reminder < ApplicationRecord
           :notification_weekdays,
           user: [:user_auth_provider, :user_auth_mail]
         ])
-        .where('notification_datetime < ?', Time.current)
+        .where('notification_datetime <= ?', Time.current)
   end
 end
