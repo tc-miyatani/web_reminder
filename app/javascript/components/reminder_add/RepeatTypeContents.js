@@ -1,8 +1,7 @@
 import React from "react"
-import PropTypes from "prop-types"
 
-import NotificationDate from "./NotificationDate";
-import NotificationWeekdays from "./NotificationWeekdays";
+import NotificationDate from "reminder_add/NotificationDate";
+import NotificationWeekdays from "reminder_add/NotificationWeekdays";
 
 const RepeatTypeContents = (props) => {
   switch (props.repeatType) {

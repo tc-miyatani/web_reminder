@@ -5,8 +5,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import RepeatTypeContents from "./RepeatTypeContents";
-import { PROPS_ATTR } from "react_ujs";
+import RepeatTypeContents from "reminder_add/RepeatTypeContents";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {

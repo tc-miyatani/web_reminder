@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useRef, useState } from "react"
 import { makeStyles } from '@material-ui/core/styles';
 import {
   CssBaseline, Container,
@@ -7,11 +7,11 @@ import {
   Dialog, DialogActions, DialogContent,
   DialogContentText, DialogTitle,
 } from '@material-ui/core';
-import RepeatType from './reminder_add/RepeatType';
-import NotificationTime from './reminder_add/NotificationTime';
-import ButtonToggleLoading from "./common/ButtonToggleLoading";
+import RepeatType from 'reminder_add/RepeatType';
+import NotificationTime from 'reminder_add/NotificationTime';
+import ButtonToggleLoading from "common/ButtonToggleLoading";
 
-import axios from './modules/axios_with_csrf';
+import axios from 'modules/axios_with_csrf';
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -26,12 +26,13 @@ const useStyles = makeStyles(() => ({
 const ReminderAddForm = () => {
   const classes = useStyles();
 
-  const [addResponse, setAddResponse] = React.useState({});
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [open, setOpen] = React.useState(false);
+  const formEl = useRef(null);
+
+  const [addResponse, setAddResponse] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = async () => {
-    const formEl = document.getElementById('reminder-add-from');
-    const formData = new FormData(formEl);
+    const formData = new FormData(formEl.current);
     console.log(formData);
 
     if (
@@ -71,7 +72,7 @@ const ReminderAddForm = () => {
     }
   };
 
-  const [repeatType, setRepeatType] = React.useState('');
+  const [repeatType, setRepeatType] = useState('');
   const handleRepeatTypeChange = (repeatTypeValue) => {
     setRepeatType(repeatTypeValue);
   };
@@ -83,7 +84,7 @@ const ReminderAddForm = () => {
         <Card className={classes.container}>
           <CardHeader title="リマインダー作成フォーム" />
           <CardContent>
-            <form id="reminder-add-from" noValidate autoComplete="off">
+            <form ref={formEl} noValidate autoComplete="off">
               <RepeatType onChange={handleRepeatTypeChange} /><br />
               { repeatType !== '' &&
                 <React.Fragment>
