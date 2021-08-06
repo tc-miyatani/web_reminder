@@ -56,13 +56,20 @@ class Reminder < ApplicationRecord
     self.user.send(self.user_auth_type)
   end
 
-  # フォーム・レスポンス関係のメソッド
+  # APIレスポンス関連のメソッド
   # ---------------------------------------------------------------------------------------------
 
   def to_response_json
-    json_data = JSON.parse(self.to_json, symbolize_names: true)
-    # TODO: weekdaysが含まれないので後で修正
-    json_data
+    JSON.parse(self.to_json, symbolize_names: true)
+    self
+  end
+
+  def self.find_all_user_reminders(user_id)
+    reminders = self.joins(:user).where(user_id: user_id)
+                    .to_json(include: {
+                              notification_weekdays: { only: :weekday_id }
+                            }, except: [:user_id], methods: :weekdays) # TODO: weekdaysどっちかだけで良い
+    { reminders: JSON.parse(reminders) }
   end
 
   # バリデーション関係のメソッド

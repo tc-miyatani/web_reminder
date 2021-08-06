@@ -21,5 +21,6 @@ Rails.application.routes.draw do
   resources :reminders, only: [:new], controller: 'reminders/mains'
   scope :api, format: 'json' do
     resources :reminders, only: [:create], controller: 'reminders/mains'
+    resource  :reminders, only: [:show],   controller: 'reminders/mains'
   end
 end

@@ -4,6 +4,8 @@ class Reminders::MainsController < ApplicationController
   def new
   end
 
+  # API リマインダー作成
+  # TODO: APIはコントローラー分けるか後で考える
   def create
     reminder = Reminder.new(reminder_params)
     reminder.notification_datetime = ReminderService.calc_next_time(reminder)
@@ -19,6 +21,13 @@ class Reminders::MainsController < ApplicationController
       msg: '登録に成功しました！',
       data: reminder.to_response_json
     }
+  end
+
+  # API ログインしているユーザーのリマインダー一覧取得
+  def show
+    reminders = Reminder.find_all_user_reminders(current_user.id)
+    render json: JSON.pretty_generate(reminders.as_json) and return # test用
+    # reminders
   end
 
   private
