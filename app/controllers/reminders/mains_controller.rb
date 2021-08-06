@@ -6,6 +6,7 @@ class Reminders::MainsController < ApplicationController
 
   # API リマインダー作成
   # TODO: APIはコントローラー分けるか後で考える
+  # TODO: JSONシリアライズ使用するか検討する(jbuilder, jsonapi-serializer)
   def create
     reminder = Reminder.new(reminder_params)
     reminder.notification_datetime = ReminderService.calc_next_time(reminder)
@@ -23,6 +24,17 @@ class Reminders::MainsController < ApplicationController
     }
   end
 
+  def update
+    reminder = Reminder.find(params[:reminder_id])
+    render json: {
+      is_success: nil,
+      msg: 'テスト中！',
+      data: reminder.to_response_json
+    }
+    # reminder.update(reminder_params)
+    # reminder.notification_datetime = ReminderService.calc_next_time(reminder)
+  end
+
   # API ログインしているユーザーのリマインダー一覧取得
   def show
     reminders = Reminder.find_all_user_reminders(current_user.id)
@@ -35,6 +47,7 @@ class Reminders::MainsController < ApplicationController
   def reminder_params
     params.require(:reminder)
           .permit(
+            :reminder_id,
             :repeat_type_id, :message,
             :notification_time,
             :notification_date,

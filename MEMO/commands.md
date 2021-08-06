@@ -15,6 +15,12 @@ ssh -i ファイル名x.pem ec2-user@web-reminder.jp
 ps aux | grep unicorn | grep master | awk '{ print "kill", $2 }' | sh
 ```
 
+## react-rails
+
+```zsh:local
+rails g react:component dir_name/ComponentName prop_name:string
+```
+
 ## cron / whenever
 
 ```zsh
