@@ -13,6 +13,8 @@ const ReminderEditForm = (props) => {
   const [apiResponse, setApiResponse] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [open, setOpen] = useState(false);
+  const [isDelete, setIsDelete] = useState(false);
+
   const handleUpdate = () => {
     const formData = new FormData(formRef.current);
     console.log(formData);
@@ -31,7 +33,7 @@ const ReminderEditForm = (props) => {
       .then(res => {
         console.log(res.data);
         if (res.data?.is_success){
-          setApiResponse({msg: res.data?.msg, is_success: res.data.is_success});
+          setApiResponse({msg: res.data?.msg, is_success: true});
         } else {
           const err_msg = res.data?.msg
                         + res.data?.error_messages?.join('!')
@@ -49,17 +51,25 @@ const ReminderEditForm = (props) => {
     setIsLoading(true);
     axios.delete(`/api/reminders/${props.reminder.id}`)
       .then(res => {
-        setApiResponse({msg: err_msg, is_success: res.data.is_success});
+        setIsDelete(true);
+        setApiResponse({msg: res.data?.msg, is_success: true});
         setOpen(true);
       })
       .catch(error => {
-        setApiResponse({msg: '未実装！'});
+        const err_msg = res.data?.msg
+                      + res.data?.error_messages?.join('!')
+                      + '!';
+        setApiResponse({msg: err_msg, is_success: res.data.is_success});
         setOpen(true);
       });
   };
   const handleClose = () => {
     setIsLoading(false);
     setOpen(false);
+    if (isDelete) {
+      setIsDelete(false);
+      props.onDelete(props.reminder.id);
+    }
   };
 
   const handleChange = obj => props.onChange(props.reminder.id, obj);
@@ -83,6 +93,7 @@ const ReminderEditForm = (props) => {
 ReminderEditForm.propTypes = {
   reminder : PropTypes.object,
   onChange : PropTypes.func,
+  onDelete : PropTypes.func,
 };
 
 export default ReminderEditForm

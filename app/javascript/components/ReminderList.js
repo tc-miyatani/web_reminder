@@ -12,6 +12,10 @@ const ReminderList = () => {
     });
     setReminders(new_reminders);
   };
+  const handleDelete = reminder_id => {
+    const new_reminders = reminders.filter(reminder => reminder.id != reminder_id);
+    setReminders(new_reminders);
+  };
 
   useEffect(() => {
     console.log('mounted!!!');
@@ -37,7 +41,10 @@ const ReminderList = () => {
   return (
       <>
         { reminders.map(reminder => {
-          return <ReminderEditForm key={reminder.id} reminder={reminder} onChange={handleChange} />;
+          return (
+            <ReminderEditForm key={reminder.id} reminder={reminder}
+                              onChange={handleChange} onDelete={handleDelete} />
+          );
         }) }
       </>
   );

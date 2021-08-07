@@ -50,9 +50,11 @@ class Reminders::MainsController < ApplicationController
   end
 
   def destroy
+    reminder = Reminder.find_by(id: params[:id], user_id: current_user.id)
+    is_success = reminder.destroy
     render json: {
-      is_success: true,
-      msg: 'テスト中！'
+      is_success: is_success,
+      msg: 'リマインダーが削除されました！'
     }
   end
 
