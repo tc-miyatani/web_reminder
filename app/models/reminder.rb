@@ -66,6 +66,7 @@ class Reminder < ApplicationRecord
 
   def self.find_all_user_reminders(user_id)
     reminders = self.joins(:user).where(user_id: user_id)
+                    .order(id: 'DESC')
                     .to_json(include: {
                               notification_weekdays: { only: :weekday_id }
                             }, except: [:user_id], methods: :weekdays) # TODO: weekdaysどっちかだけで良い
