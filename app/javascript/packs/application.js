@@ -4,7 +4,7 @@
 // that code so it'll be compiled.
 
 require("@rails/ujs").start()
-require("turbolinks").start()
+// require("turbolinks").start()
 require("@rails/activestorage").start()
 require("channels")
 
@@ -19,6 +19,5 @@ require("channels")
 var componentRequireContext = require.context("components", true);
 var ReactRailsUJS = require("react_ujs");
 ReactRailsUJS.useContext(componentRequireContext);
-ReactRailsUJS.mountComponents()
-ReactRailsUJS.detectEvents()
-delete window.Turbolinks;
+ReactRailsUJS.mountComponents();
+ReactRailsUJS.detectEvents();
