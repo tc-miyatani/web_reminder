@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 2021_08_05_122850) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["notification_time"], name: "index_notification_logs_on_notification_time"
-    t.index ["provider_id", "provider_name", "notification_time"], name: "idx_notification_logs_provider_id_name_time", unique: true
+    t.index ["provider_id", "provider_name", "notification_time", "reminder_id"], name: "idx_notification_logs_provider_id_name_time", unique: true
   end
 
   create_table "notification_weekdays", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 2021_08_05_122850) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["reminder_id"], name: "index_notification_weekdays_on_reminder_id"
+    t.index ["weekday_id", "reminder_id"], name: "index_notification_weekdays_on_weekday_id_and_reminder_id", unique: true
   end
 
   create_table "reminders", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|

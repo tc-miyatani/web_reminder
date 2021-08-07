@@ -1,4 +1,5 @@
-import React from "react"
+import React from "react";
+import PropTypes from "prop-types";
 import { makeStyles } from '@material-ui/core/styles';
 
 import 'date-fns';
@@ -15,13 +16,10 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const NotificationTime = () => {
+const NotificationTime = (props) => {
   const classes = useStyles();
 
-  const [selectedTime, setSelectedTime] = React.useState(new Date());
-  const handleTimeChange = (time) => {
-    setSelectedTime(time);
-  };
+  const handleChange = time => props.onChange({notification_time: time});
 
   return (
     <div className={classes.container}>
@@ -32,8 +30,8 @@ const NotificationTime = () => {
           name='reminder[notification_time]'
           format="HH:mm"
           label='通知時間'
-          value={selectedTime}
-          onChange={handleTimeChange}
+          value={props.reminder.notification_time}
+          onChange={handleChange}
           KeyboardButtonProps={{
             'aria-label': 'change time',
           }}
@@ -42,5 +40,10 @@ const NotificationTime = () => {
     </div>
   );
 }
+
+NotificationTime.propTypes = {
+  reminder : PropTypes.object,
+  onChange : PropTypes.func,
+};
 
 export default NotificationTime

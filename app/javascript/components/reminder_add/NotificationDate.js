@@ -1,4 +1,5 @@
-import React from "react"
+import React from "react";
+import PropTypes from "prop-types";
 import { makeStyles } from '@material-ui/core/styles';
 
 import 'date-fns';
@@ -15,12 +16,11 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const NotificationDate = () => {
+const NotificationDate = (props) => {
   const classes = useStyles();
 
-  const [selectedDate, setSelectedDate] = React.useState(new Date());
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
+  const handleChange = date => {
+    props.onChange({notification_date: date});
   };
   
   return (
@@ -33,8 +33,8 @@ const NotificationDate = () => {
         id="notification-date"
         name="reminder[notification_date]"
         label="通知日"
-        value={selectedDate}
-        onChange={handleDateChange}
+        value={props.reminder.notification_date}
+        onChange={handleChange}
         KeyboardButtonProps={{
           'aria-label': 'change date',
         }}
@@ -42,5 +42,10 @@ const NotificationDate = () => {
     </MuiPickersUtilsProvider>
   );
 }
+
+NotificationDate.propTypes = {
+  reminder : PropTypes.object,
+  onChange : PropTypes.func,
+};
 
 export default NotificationDate

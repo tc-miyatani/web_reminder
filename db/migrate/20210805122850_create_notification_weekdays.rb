@@ -5,5 +5,6 @@ class CreateNotificationWeekdays < ActiveRecord::Migration[6.0]
       t.references :reminder,   null: false, foreign_key: true
       t.timestamps
     end
+    add_index :notification_weekdays, [:weekday_id, :reminder_id], unique: true
   end
 end
