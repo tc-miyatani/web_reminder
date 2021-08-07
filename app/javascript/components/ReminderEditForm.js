@@ -25,7 +25,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const ReminderEdit = (props) => {
+const ReminderEditForm = (props) => {
   const classes = useStyles();
 
   const formEl = useRef(null);
@@ -116,9 +116,9 @@ const ReminderEdit = (props) => {
   );
 };
 
-ReminderEdit.propTypes = {
+ReminderEditForm.propTypes = {
   reminder : PropTypes.object,
   onChange : PropTypes.func,
 };
 
-export default ReminderEdit
+export default ReminderEditForm

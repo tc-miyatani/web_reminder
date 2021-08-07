@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react"
 
 import axios from 'modules/axios_with_csrf';
-import ReminderEdit from "reminder_edit/ReminderEdit";
+import ReminderEditForm from "ReminderEditForm";
 
 const ReminderList = () => {
-  const [reminders, setReminders] = React.useState([]);
+  const [reminders, setReminders] = useState([]);
   const handleChange = (reminder_id, data) => {
     const new_reminders = reminders.map(reminder => {
       const change_data = (reminder.id === reminder_id) ? data : {};
@@ -37,7 +37,7 @@ const ReminderList = () => {
   return (
       <>
         { reminders.map(reminder => {
-          return <ReminderEdit key={reminder.id} reminder={reminder} onChange={handleChange} />;
+          return <ReminderEditForm key={reminder.id} reminder={reminder} onChange={handleChange} />;
         }) }
       </>
   );
