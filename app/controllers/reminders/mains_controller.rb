@@ -25,11 +25,15 @@ class Reminders::MainsController < ApplicationController
   end
 
   def update
+    is_success = false
     reminder = Reminder.find_by(id: params[:id], user_id: current_user.id)
-    is_success = reminder.update(reminder_params)
-    if is_success
+    ActiveRecord::Base.transaction(joinable: false, requires_new: true) do
+      if reminder_params.has_key?(:notification_weekdays_attributes)
+        reminder.notification_weekdays&.destroy_all
+      end
+      reminder.assign_attributes(reminder_params)
       reminder.notification_datetime = ReminderService.calc_next_time(reminder)
-      is_success &= reminder.save
+      is_success = reminder.save
     end
     unless is_success
       render json: {
@@ -42,6 +46,13 @@ class Reminders::MainsController < ApplicationController
       is_success: true,
       msg: '更新に成功しました！',
       data: reminder.to_response_json
+    }
+  end
+
+  def destroy
+    render json: {
+      is_success: true,
+      msg: 'テスト中！'
     }
   end
 

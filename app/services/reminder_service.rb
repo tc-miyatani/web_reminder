@@ -7,8 +7,15 @@ class ReminderService
 
   # 次の通知日時を算出して返す
   def self.calc_next_time(reminder, base_time=Time.current)
+    if reminder.notification_time.blank?
+      reminder.notification_time = reminder.notification_datetime.strftime('%H:%M')
+    end
+
     case reminder.repeat_type
     when RepeatType.find_by(name: 'once') then
+      if reminder.notification_date.blank?
+        reminder.notification_date = reminder.notification_datetime.strftime('%Y-%m-%d')
+      end
       next_time = reminder.notification_date + ' ' + reminder.notification_time
     when RepeatType.find_by(name: 'repeat-daily') then
       next_time = self.daily_next_time(reminder.notification_time)
