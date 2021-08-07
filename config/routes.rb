@@ -14,11 +14,11 @@ Rails.application.routes.draw do
     omniauth_callbacks: 'users/omniauth_callbacks'
   }, path: 'users'
 
-  root to: 'reminders/mypages#index'
+  root to: 'react_pages#empty'
   resource :user, only: [:edit, :update], controller: 'reminders/mypages',
                   path: 'users/profile', as: 'user_profile'
 
-  resources :reminders, only: [:new], controller: 'reminders/mains'
+  resources :reminders, only: [:new], controller: 'react_pages'
   scope :api, format: 'json' do
     resources :reminders, only: [:create, :update, :destroy], controller: 'reminders/mains'
     resource  :reminders, only: [:show],                      controller: 'reminders/mains'
