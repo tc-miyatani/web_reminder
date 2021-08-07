@@ -7,13 +7,13 @@ import {
   Divider, TextField, Button,
 
 } from '@material-ui/core';
-import RepeatType from 'reminder_add/RepeatType';
-import NotificationTime from 'reminder_add/NotificationTime';
+import MessageDialog from "common/MessageDialog";
 import ButtonToggleLoading from "common/ButtonToggleLoading";
+import RepeatType from 'reminder_add/RepeatType';
+import RepeatTypeContents from "reminder_add/RepeatTypeContents";
+import NotificationTime from 'reminder_add/NotificationTime';
 
 import axios from 'modules/axios_with_csrf';
-import MessageDialog from "common/MessageDialog";
-import RepeatTypeContents from "reminder_add/RepeatTypeContents";
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -33,7 +33,7 @@ const ReminderEditForm = (props) => {
   const [apiResponse, setApiResponse] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [open, setOpen] = useState(false);
-  const handleUpdate = async () => {
+  const handleUpdate = () => {
     const formData = new FormData(formEl.current);
     console.log(formData);
 
