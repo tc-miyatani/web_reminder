@@ -25,14 +25,24 @@ class Reminders::MainsController < ApplicationController
   end
 
   def update
-    reminder = Reminder.find(params[:reminder_id])
+    reminder = Reminder.find_by(id: params[:id], user_id: current_user.id)
+    is_success = reminder.update(reminder_params)
+    if is_success
+      reminder.notification_datetime = ReminderService.calc_next_time(reminder)
+      is_success &= reminder.save
+    end
+    unless is_success
+      render json: {
+        is_success: false,
+        msg: '更新に失敗しました！',
+        error_messages: reminder.errors.full_messages
+      } and return
+    end
     render json: {
-      is_success: nil,
-      msg: 'テスト中！',
+      is_success: true,
+      msg: '更新に成功しました！',
       data: reminder.to_response_json
     }
-    # reminder.update(reminder_params)
-    # reminder.notification_datetime = ReminderService.calc_next_time(reminder)
   end
 
   # API ログインしているユーザーのリマインダー一覧取得

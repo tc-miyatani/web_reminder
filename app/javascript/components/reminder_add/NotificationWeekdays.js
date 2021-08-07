@@ -53,7 +53,7 @@ const NotificationWeekdays = (props) => {
       </div>
 
       <Select name="reminder[notification_weekdays_attributes][][weekday_id]"
-              multiple value={props.reminder.weekdays||[]} className={classes.hidden}
+              native multiple value={props.reminder.weekdays||[]} className={classes.hidden}
       >
         {WEEKDAYS.map((wday_ja, wday) => (
           <option key={wday} value={wday}>{wday_ja}</option>
