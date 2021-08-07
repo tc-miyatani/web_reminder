@@ -9,7 +9,7 @@ class CreateNotificationLogs < ActiveRecord::Migration[6.0]
       t.timestamps
     end
 
-    add_index :notification_logs, [:provider_id, :provider_name, :notification_time],
+    add_index :notification_logs, [:provider_id, :provider_name, :notification_time, :reminder_id],
               unique: true, name: 'idx_notification_logs_provider_id_name_time'
     add_index :notification_logs, [:notification_time]
   end
