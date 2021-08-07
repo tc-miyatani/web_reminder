@@ -43,7 +43,7 @@ const NotificationWeekdays = (props) => {
       <div className={classes.root}>
         <ButtonGroup aria-label="通知曜日" color="primary">
           {WEEKDAYS.map((wday_ja, wday) => (
-            <Button variant={getVariant(wday)} onClick={makeHandleChange(wday)}>{wday_ja}</Button>
+            <Button key={wday} variant={getVariant(wday)} onClick={makeHandleChange(wday)}>{wday_ja}</Button>
           ))}
         </ButtonGroup>
       </div>
