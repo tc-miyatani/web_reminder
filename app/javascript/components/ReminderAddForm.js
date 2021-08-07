@@ -1,40 +1,20 @@
-import React , { useRef, useState } from "react"
-import PropTypes from "prop-types"
+import React, { createRef, useState } from "react";
+import PropTypes from "prop-types";
 
-import { makeStyles } from '@material-ui/core/styles';
-import {
-  CssBaseline, Container,
-  Card, CardHeader, CardContent, CardActions,
-  Divider, TextField, Button,
-} from '@material-ui/core';
+import ReminderForm from "ReminderForm";
 import MessageDialog from "common/MessageDialog";
 import ButtonToggleLoading from "common/ButtonToggleLoading";
-import RepeatType from 'reminder_add/RepeatType';
-import RepeatTypeContents from "reminder_add/RepeatTypeContents";
-import NotificationTime from 'reminder_add/NotificationTime';
 
 import axios from 'modules/axios_with_csrf';
 
-const useStyles = makeStyles(() => ({
-  container: {
-    width: '100%',
-    maxWidth: '600px',
-  },
-  cardTitle: {
-    display: 'inline-block'
-  }
-}));
-
 const ReminderAddForm = (props) => {
-  const classes = useStyles();
-
-  const formEl = useRef(null);
+  const formRef = createRef();
 
   const [apiResponse, setApiResponse] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [open, setOpen] = useState(false);
-  const handleOpen = () => {
-    const formData = new FormData(formEl.current);
+  const handleAdd = () => {
+    const formData = new FormData(formRef.current);
     console.log(formData);
 
     if (
@@ -51,18 +31,18 @@ const ReminderAddForm = (props) => {
       .then(res => {
         console.log(res.data);
         if (res.data?.is_success){
-          setApisResponse({msg: res.data?.msg, is_success: res.data.is_success});
+          setApiResponse({msg: res.data?.msg, is_success: res.data.is_success});
         } else {
           const err_msg = res.data?.msg
                         + res.data?.error_messages?.join('!')
                         + '!';
-          setApisResponse({msg: err_msg, is_success: res.data.is_success});
+          setApiResponse({msg: err_msg, is_success: res.data.is_success});
         }
         setIsLoading(false);
         setOpen(true);
       })
       .catch(error => {
-        setApisResponse({msg: '通信エラーが発生しました。', is_success: false});
+        setApiResponse({msg: '通信エラーが発生しました。', is_success: false});
         setIsLoading(false);
         setOpen(true);
       });
@@ -78,34 +58,11 @@ const ReminderAddForm = (props) => {
 
   return (
     <>
-      <CssBaseline />
-      <Container fixed>
-        <Card className={classes.container}>
-          <CardHeader title="リマインダー作成フォーム" />
-          <CardContent>
-            <form ref={formEl} noValidate autoComplete="off">
-              <RepeatType reminder={props.reminder} onChange={handleChange} /><br />
-              { props.reminder.repeat_type_id &&
-                <>
-                  <RepeatTypeContents reminder={props.reminder} onChange={handleChange} />
-                  <NotificationTime reminder={props.reminder} onChange={handleChange} />
-                  <TextField  name="reminder[message]" label="通知メッセージ" required fullWidth
-                              defaultValue={props.reminder.message} />
-                </>
-              }
-            </form>
-          </CardContent>
-          <CardActions>
-            { props.reminder.repeat_type_id &&
-              <>
-                <ButtonToggleLoading isLoading={isLoading} onClick={handleOpen}>
-                  登録
-                </ButtonToggleLoading>
-              </>
-            }
-          </CardActions>
-        </Card>
-      </Container>
+      <ReminderForm ref={formRef} title="リマインダー作成フォーム'" reminder={props.reminder} onChange={handleChange}>
+        <ButtonToggleLoading isLoading={isLoading} onClick={handleAdd}>
+          登録
+        </ButtonToggleLoading>
+      </ReminderForm>
       <MessageDialog open={open} onClose={handleClose} msg={apiResponse.msg} />
     </>
   );

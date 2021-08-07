@@ -20,6 +20,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const RepeatType = (props) => {
+  const MENUS = { 1: '1回きり', 2: '繰り返し(毎日)', 3: '繰り返し(毎週○曜日)' };
+  // TODO: '繰り返し(毎月○日)', '繰り返し(○日毎)', '繰り返し(指定曜日○日毎)'
+  // 'repeat-monthly', 'repeat-every-days', 'repeat-every-weekly-days'
+
   const classes = useStyles();
 
   const handleChange = event => props.onChange({repeat_type_id: +event.target.value});
@@ -32,15 +36,12 @@ const RepeatType = (props) => {
           labelId="repeat-type-label"
           id="repeat-type"
           name="reminder[repeat_type_id]"
-          value={String(props.reminder.repeat_type_id)}
+          value={String(props.reminder.repeat_type_id || '')}
           onChange={handleChange}
         >
-          <MenuItem value='1'>1回きり</MenuItem>
-          <MenuItem value='2'>繰り返し(毎日)</MenuItem>
-          <MenuItem value='3'>繰り返し(毎週○曜日)</MenuItem>
-          {/* <MenuItem value='repeat-monthly'>繰り返し(毎月○日)</MenuItem> */}
-          {/* <MenuItem value='repeat-every-days'>繰り返し(○日毎)</MenuItem> */}
-          {/* <MenuItem value='repeat-every-weekly-days'>繰り返し(指定曜日○日毎)</MenuItem> */}
+          {Object.entries(MENUS).map(([val, text]) => (
+            <MenuItem key={val} value={val}>{text}</MenuItem>
+          ))}
         </Select>
       </FormControl>
     </>

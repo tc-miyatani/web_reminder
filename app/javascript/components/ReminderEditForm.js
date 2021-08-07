@@ -1,40 +1,20 @@
-import React, { useRef, useState } from "react";
+import React, { createRef, useState } from "react";
 import PropTypes from "prop-types";
-import { makeStyles } from '@material-ui/core/styles';
-import {
-  CssBaseline, Container,
-  Card, CardHeader, CardContent, CardActions,
-  Divider, TextField, Button,
 
-} from '@material-ui/core';
+import ReminderForm from "ReminderForm";
 import MessageDialog from "common/MessageDialog";
 import ButtonToggleLoading from "common/ButtonToggleLoading";
-import RepeatType from 'reminder_add/RepeatType';
-import RepeatTypeContents from "reminder_add/RepeatTypeContents";
-import NotificationTime from 'reminder_add/NotificationTime';
 
 import axios from 'modules/axios_with_csrf';
 
-const useStyles = makeStyles(() => ({
-  container: {
-    width: '100%',
-    maxWidth: '600px',
-  },
-  cardTitle: {
-    display: 'inline-block'
-  }
-}));
-
 const ReminderEditForm = (props) => {
-  const classes = useStyles();
-
-  const formEl = useRef(null);
+  const formRef = createRef();
 
   const [apiResponse, setApiResponse] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const handleUpdate = () => {
-    const formData = new FormData(formEl.current);
+    const formData = new FormData(formRef.current);
     console.log(formData);
 
     if (
@@ -58,20 +38,27 @@ const ReminderEditForm = (props) => {
                         + '!';
           setApiResponse({msg: err_msg, is_success: res.data.is_success});
         }
-        setIsLoading(false);
         setOpen(true);
       })
       .catch(error => {
         setApiResponse({msg: '通信エラーが発生しました。', is_success: false});
-        setIsLoading(false);
         setOpen(true);
       });
   };
   const handleDelete = () => {
-    setApiResponse({msg: '未実装！'});
-    setOpen(true);
+    setIsLoading(true);
+    axios.delete(`/api/reminders/${props.reminder.id}`)
+      .then(res => {
+        setApiResponse({msg: err_msg, is_success: res.data.is_success});
+        setOpen(true);
+      })
+      .catch(error => {
+        setApiResponse({msg: '未実装！'});
+        setOpen(true);
+      });
   };
   const handleClose = () => {
+    setIsLoading(false);
     setOpen(false);
   };
 
@@ -79,37 +66,14 @@ const ReminderEditForm = (props) => {
 
   return (
     <>
-      <CssBaseline />
-      <Container fixed>
-        <Card className={classes.container}>
-          <CardHeader title={`リマインダーID: ${props.reminder.id}`} />
-          <CardContent>
-            <form ref={formEl} noValidate autoComplete="off">
-              <RepeatType reminder={props.reminder} onChange={handleChange} /><br />
-              { props.reminder.repeat_type_id &&
-                <>
-                  <RepeatTypeContents reminder={props.reminder} onChange={handleChange} />
-                  <NotificationTime reminder={props.reminder} onChange={handleChange} />
-                  <TextField  name="reminder[message]" label="通知メッセージ" required fullWidth
-                              defaultValue={props.reminder.message} />
-                </>
-              }
-            </form>
-          </CardContent>
-          <CardActions>
-            { props.reminder.repeat_type_id &&
-              <>
-                <ButtonToggleLoading color="primary" isLoading={isLoading} onClick={handleUpdate}>
-                  更新
-                </ButtonToggleLoading>
-                <ButtonToggleLoading color="secondary" isLoading={isLoading} onClick={handleDelete}>
-                  削除
-                </ButtonToggleLoading>
-              </>
-            }
-          </CardActions>
-        </Card>
-      </Container>
+      <ReminderForm ref={formRef} title={`リマインダーID: ${props.reminder.id}`} reminder={props.reminder} onChange={handleChange}>
+        <ButtonToggleLoading color="primary" isLoading={isLoading} onClick={handleUpdate}>
+          更新
+        </ButtonToggleLoading>
+        <ButtonToggleLoading color="secondary" isLoading={isLoading} onClick={handleDelete}>
+          削除
+        </ButtonToggleLoading>
+      </ReminderForm>
       <MessageDialog open={open} onClose={handleClose} msg={apiResponse.msg} />
       <br /><br />
     </>
