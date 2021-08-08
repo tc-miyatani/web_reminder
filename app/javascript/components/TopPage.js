@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from '@material-ui/core/styles';
 import { 
@@ -7,6 +7,8 @@ import {
   Button,
 } from '@material-ui/core';
 import { Parallax } from 'react-parallax';
+import InViewMonitor from 'react-inview-monitor';
+import 'animate.css/animate.min.css';
 
 const useStyles = makeStyles((theme)=>({
   fullParallax: {
@@ -78,6 +80,21 @@ const useStyles = makeStyles((theme)=>({
 const TopPage = () => {
   const classes = useStyles();
 
+  useEffect(() => {
+    window.addEventListener('scroll', () => {
+      [...document.querySelectorAll('.scroll_animate')].map(elm => {
+        const scroll = window.scrollY;
+        const offsetTop = elm.offsetTop;
+        const windowHeight = window.innerHeight;
+        if (offsetTop < scroll + windowHeight) {
+          elm.dataset.animate.split(' ').map(className => elm.classList.add(className));
+        } else {
+          elm.dataset.animate.split(' ').map(className => elm.classList.remove(className));
+        }
+      });
+    });
+  }, []);
+
   return (
     <>
       <Parallax blur={2} bgImage="/assets/top-bg-time.jpg" bgImageAlt="リマインダー"
@@ -94,56 +111,58 @@ const TopPage = () => {
         </div>
       </Parallax>
 
-      <Parallax bgImageAlt="クラウド"
-        strength={500} style={{height: '500px !important'}}
-      >
-        <Grid container component="main" style={{height: '500px'}}>
-          <CssBaseline />
-          <Grid item xs={12} sm={4} md={7} className={`${classes.sideImage} ${classes.cloudImage}`} />
-          <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-            <div className={classes.paper}>
-              <Card className={classes.sameWidthCard}>
-                <CardContent>
-                  クラウドだから面倒なアプリのインストールが不要！
-                </CardContent>
-              </Card>
-              <div style={{height: '60px'}}></div>
-              <Card className={classes.sameWidthCard}>
-                <CardContent>
-                  もうスマホを買い替えてもアプリを入れ直さなくてOK！
-                </CardContent>
-              </Card>
-            </div>
-          </Grid>
-        </Grid>
-      </Parallax>
+      <Grid container component="main" style={{height: '500px'}}>
+        <CssBaseline />
 
-      <Parallax bgImageAlt="クラウド"
-        strength={500} style={{height: '500px !important'}}
-      >
-        <Grid container component="main" style={{height: '500px'}}>
-          <CssBaseline />
-          <Hidden smUp>
-            <Grid item xs={12} sm={false} md={false} className={`${classes.sideImage} ${classes.pcMobileImage}`} />
-          </Hidden>
-          <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-            <div className={classes.paper}>
-              <Card className={classes.sameWidthCard}>
-                <CardContent>
-                  PCでもスマホでもタブレットでも共通で使える！
-                </CardContent>
-              </Card>
-              <div style={{height: '60px'}}></div>
-              <Card className={classes.sameWidthCard}>
-                <CardContent>
-                  一元管理して作業効率化！
-                </CardContent>
-              </Card>
-            </div>
-          </Grid>
-          <Grid item xs={false} sm={4} md={7} className={`${classes.sideImage} ${classes.pcMobileImage}`} />
+        <Grid item xs={12} sm={4} md={7} className={`${classes.sideImage} ${classes.cloudImage} scroll_animate`}
+          data-animate="animate__animated animate__fadeInLeft"
+        />
+
+        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square
+          className={'scroll_animate'} data-animate="animate__animated animate__fadeInRight"
+        >
+          <div className={classes.paper}>
+            <Card className={classes.sameWidthCard}>
+              <CardContent>
+                クラウドだから面倒なアプリのインストールが不要！
+              </CardContent>
+            </Card>
+            <div style={{height: '60px'}}></div>
+            <Card className={classes.sameWidthCard}>
+              <CardContent>
+                もうスマホを買い替えてもアプリを入れ直さなくてOK！
+              </CardContent>
+            </Card>
+          </div>
         </Grid>
-      </Parallax>
+      </Grid>
+
+      <Grid container component="main" style={{height: '500px'}}>
+        <CssBaseline />
+        <Hidden smUp>
+          <Grid item xs={12} sm={false} md={false} className={`${classes.sideImage} ${classes.pcMobileImage}`} />
+        </Hidden>
+        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square
+          className={'scroll_animate'} data-animate="animate__animated animate__fadeInLeft"
+        >
+          <div className={classes.paper}>
+            <Card className={classes.sameWidthCard}>
+              <CardContent>
+                PCでもスマホでもタブレットでも共通で使える！
+              </CardContent>
+            </Card>
+            <div style={{height: '60px'}}></div>
+            <Card className={classes.sameWidthCard}>
+              <CardContent>
+                一元管理して作業効率化！
+              </CardContent>
+            </Card>
+          </div>
+        </Grid>
+        <Grid item xs={false} sm={4} md={7} className={`${classes.sideImage} ${classes.pcMobileImage} scroll_animate`}
+            data-animate="animate__animated animate__fadeInRight"
+        />
+      </Grid>
     </>
   );
 };
