@@ -15,7 +15,7 @@ const MessageDialog = (props) => {
         aria-labelledby="responsive-dialog-title"
       >
         <DialogTitle id="responsive-dialog-title">
-          {props.title || 'WebReminder'}
+          {props.title || 'CloudReminder'}
         </DialogTitle>
         <DialogContent>
           <DialogContentText>

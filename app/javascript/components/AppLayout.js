@@ -2,16 +2,26 @@ import React from "react";
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import useScrollTrigger from '@material-ui/core/useScrollTrigger';
-import Box from '@material-ui/core/Box';
-import Container from '@material-ui/core/Container';
-import Slide from '@material-ui/core/Slide';
-import { Button, Link } from "@material-ui/core";
+import {
+  AppBar, Toolbar, Typography,
+  Container, CssBaseline, useScrollTrigger, Slide,
+  Button, Link,
+
+} from "@material-ui/core";
 import MyRouter from "./MyRouter";
+
+function Copyright() {
+  return (
+    <Typography variant="body2" color="textSecondary">
+      {'Copyright © '}
+      <Link color="inherit" href="https://web-reminder.jp/">
+        master@web-reminder.jp
+      </Link>{' '}
+      {new Date().getFullYear()}
+      {'.'}
+    </Typography>
+  );
+}
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,7 +37,13 @@ const useStyles = makeStyles((theme) => ({
     '&:hover': {
       textDecoration: 'none',
     }
-  }
+  },
+  footer: {
+    padding: theme.spacing(3, 2),
+    marginTop: 'auto',
+    backgroundColor:
+      theme.palette.type === 'light' ? theme.palette.grey[200] : theme.palette.grey[800],
+  },
 }));
 
 const AppLayout = (props) => {
@@ -42,7 +58,7 @@ const AppLayout = (props) => {
         <AppBar className={classes.root}>
           <Toolbar>
             <Typography variant="h6" className={classes.title}>
-              <Link href="/" color="inherit" className={classes.titleLink}>WebReminder</Link>
+              <Link href="/" color="inherit" className={classes.titleLink}>CloudReminder</Link>
             </Typography>
             {(() => {
               if (props.is_sign_in) {
@@ -65,13 +81,12 @@ const AppLayout = (props) => {
         </AppBar>
       </Slide>
       <Toolbar />
-      <Container>
-        <Box my={2}>
-          <MyRouter {...props}/>
-          {/* {[...Array(100)].map(i => <div key={i}><br /></div>)}TEST:スクロールテスト用 */}
-          (c) master@web-reminder.jp
-        </Box>
-      </Container>
+      <MyRouter {...props}/>
+      <footer className={classes.footer}>
+        <Container maxWidth="sm">
+          <Copyright />
+        </Container>
+      </footer>
     </>
   );
 }

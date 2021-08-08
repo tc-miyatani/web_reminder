@@ -13,7 +13,7 @@ RSpec.describe ReminderMailer, type: :mailer do
       it 'from/to/subject/body' do
         expect(@mail.from.first).to eq ENV['MAIL_FROM']
         expect(@mail.to.first).to   eq @user_auth_mail.email
-        expect(@mail.subject).to    eq 'WebReminderによる通知'
+        expect(@mail.subject).to    eq 'CloudReminderによる通知'
         expect(@mail.body).to  include @reminder.message
       end
     end

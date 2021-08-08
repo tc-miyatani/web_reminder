@@ -1,6 +1,6 @@
 # アプリケーション名
 
-WebReminder
+CloudReminder
 
 # アプリケーション概要
 
