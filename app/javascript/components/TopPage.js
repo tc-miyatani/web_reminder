@@ -111,16 +111,12 @@ const TopPage = () => {
         </div>
       </Parallax>
 
-      <Grid container component="main" style={{height: '500px'}}>
+      <Grid container component="main" style={{height: '500px'}}
+        className={'scroll_animate'} data-animate="animate__animated animate__fadeInLeft"
+      >
         <CssBaseline />
-
-        <Grid item xs={12} sm={4} md={7} className={`${classes.sideImage} ${classes.cloudImage} scroll_animate`}
-          data-animate="animate__animated animate__fadeInLeft"
-        />
-
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square
-          className={'scroll_animate'} data-animate="animate__animated animate__fadeInRight"
-        >
+        <Grid item xs={12} sm={4} md={7} className={`${classes.sideImage} ${classes.cloudImage}`} />
+        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
           <div className={classes.paper}>
             <Card className={classes.sameWidthCard}>
               <CardContent>
@@ -137,14 +133,14 @@ const TopPage = () => {
         </Grid>
       </Grid>
 
-      <Grid container component="main" style={{height: '500px'}}>
+      <Grid container component="main" style={{height: '500px'}}
+        className={'scroll_animate'} data-animate="animate__animated animate__fadeInUp"
+      >
         <CssBaseline />
         <Hidden smUp>
           <Grid item xs={12} sm={false} md={false} className={`${classes.sideImage} ${classes.pcMobileImage}`} />
         </Hidden>
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square
-          className={'scroll_animate'} data-animate="animate__animated animate__fadeInLeft"
-        >
+        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
           <div className={classes.paper}>
             <Card className={classes.sameWidthCard}>
               <CardContent>
@@ -159,9 +155,7 @@ const TopPage = () => {
             </Card>
           </div>
         </Grid>
-        <Grid item xs={false} sm={4} md={7} className={`${classes.sideImage} ${classes.pcMobileImage} scroll_animate`}
-            data-animate="animate__animated animate__fadeInRight"
-        />
+        <Grid item xs={false} sm={4} md={7} className={`${classes.sideImage} ${classes.pcMobileImage}`} />
       </Grid>
     </>
   );
