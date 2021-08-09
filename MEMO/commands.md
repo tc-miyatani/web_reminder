@@ -34,6 +34,18 @@ crontab -l
 bundle exec whenever --clear-crontab
 ```
 
+## ER
+
+rails-ERDを利用したER図の自動生成
+
+```zsh
+# pdf
+sudo bundle exe erd
+# png
+sudo bundle exe erd --filetype=dot
+dot -Tpng erd.dot > erd.png
+```
+
 ## 開発時に使用したコマンド
 
 ### SSH
