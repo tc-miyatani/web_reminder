@@ -3,24 +3,14 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width">
-    <title>WebReminder</title>
+    <title>CloudReminder</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag 'application', media: 'all' %>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap">
     <%= javascript_pack_tag 'application' %>
   </head>
   <body>
-    <header>
-      <%- if user_signed_in? %>
-        <%= link_to 'ログアウト', destroy_user_auth_mail_session_path, method: :delete %>
-      <% else %>
-        <%= link_to '新規登録', new_user_auth_mail_registration_path %>
-        <%= link_to 'ログイン', new_user_auth_mail_session_path %>
-      <% end %>
-    </header>
-    <%= yield %>
-    <footer>
-      mail: <%= ENV['MAIL_FROM'] %>
-    </footer>
+    <%= react_component('AppLayout', { content: yield, is_sign_in: user_signed_in? }) %>
   </body>
 </html>

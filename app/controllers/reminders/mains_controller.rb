@@ -1,12 +1,8 @@
+# Reminder関係の内部API専用コントローラー
+# TODO: JSONシリアライズ使用するか検討する(jbuilder, jsonapi-serializer)
 class Reminders::MainsController < ApplicationController
   before_action :authenticate_user!
 
-  def new
-  end
-
-  # API リマインダー作成
-  # TODO: APIはコントローラー分けるか後で考える
-  # TODO: JSONシリアライズ使用するか検討する(jbuilder, jsonapi-serializer)
   def create
     reminder = Reminder.new(reminder_params)
     reminder.notification_datetime = ReminderService.calc_next_time(reminder)
