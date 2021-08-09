@@ -21,9 +21,21 @@ ps aux | grep unicorn | grep master | awk '{ print "kill", $2 }' | sh
 rails g react:component dir_name/ComponentName prop_name:string
 ```
 
-## cron / whenever
+## command test
 
-```zsh
+
+
+## rake / cron / whenever
+
+### rake test
+```zsh:AWS
+cd /var/www/web_reminder/current
+rails task_reminder:notification RAILS_ENV=production
+```
+
+### whenever local
+
+```zsh:local
 # wheneverの設定にエラーがないか確認
 bundle exec whenever
 # wheneverの`config/schedule.rb`をcronに反映
@@ -32,6 +44,17 @@ bundle exec whenever --update-crontab
 crontab -l
 # wheneverの設定内容をcronから削除
 bundle exec whenever --clear-crontab
+```
+
+### whenever AWS
+
+```zsh:AWS
+cd /var/www/web_reminder/current
+bundle exec whenever --update-crontab --set environment='production'
+crontab -l
+crontab -e
+# `/releases/xxxxx`を`/current`に変更
+# `RAILS_ENV=development`を`RAILS_ENV=production`に変更
 ```
 
 ## ER

@@ -21,8 +21,8 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     user_auth_provider = UserAuthProvider.create_with_user(user_auth_provider_params)
     sign_in(:user, user)
     sign_in(:user_auth_provider, user_auth_provider)
-    flash[:register_message] = '登録が完了しました！'
-    redirect_to edit_user_profile_path and return
+    flash[:flash_alerts] = [['success', '登録が完了しました！']]
+    redirect_to root_path and return
   end
 
   private

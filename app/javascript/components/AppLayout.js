@@ -8,7 +8,8 @@ import {
   Button, Link,
 
 } from "@material-ui/core";
-import MyRouter from "./MyRouter";
+import MyRouter from "MyRouter";
+import ClosableAlert from "common/ClosableAlert";
 
 function Copyright() {
   return (
@@ -44,6 +45,11 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor:
       theme.palette.type === 'light' ? theme.palette.grey[200] : theme.palette.grey[800],
   },
+  flash_alerts: {
+    position: 'absolute',
+    top: '64px',
+    zIndex: '9999',
+  }
 }));
 
 const AppLayout = (props) => {
@@ -81,6 +87,11 @@ const AppLayout = (props) => {
         </AppBar>
       </Slide>
       <Toolbar />
+      <Container className={classes.flash_alerts}>
+        {props.flash_alerts.map(([severity, message], i) => (
+          <ClosableAlert key={i} severity={severity} message={message} />
+        ))}
+      </Container>
       <MyRouter {...props}/>
       <footer className={classes.footer}>
         <Container maxWidth="sm">

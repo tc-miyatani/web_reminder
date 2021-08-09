@@ -44,10 +44,8 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
     @user_auth_mail.save
     sign_in(:user, user)
     sign_in(:user_auth_mail, @user_auth_mail)
-    redirect_to action: :complete
-  end
-
-  def complete
+    flash[:flash_alerts] = [['success', '登録が完了しました！']]
+    redirect_to root_path
   end
 
   private
