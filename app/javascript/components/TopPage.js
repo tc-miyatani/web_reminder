@@ -61,10 +61,10 @@ const useStyles = makeStyles((theme)=>({
     backgroundPosition: 'center',
   },
   cloudImage: {
-    backgroundImage: 'url("/assets/top-bg-cloud.jpg")',
+    backgroundImage: props => `url("${props.rails_asset_path['top-bg-cloud.jpg']}")`,
   },
   pcMobileImage: {
-    backgroundImage: 'url("/assets/top-bg-pc-mobile.jpg")',
+    backgroundImage: props => `url("${props.rails_asset_path['top-bg-pc-mobile.jpg']}")`,
   },
   paper: {
     margin: theme.spacing(8, 4),
@@ -77,8 +77,8 @@ const useStyles = makeStyles((theme)=>({
   }
 }));
 
-const TopPage = () => {
-  const classes = useStyles();
+const TopPage = (props) => {
+  const classes = useStyles(props);
 
   useEffect(() => {
     window.addEventListener('scroll', () => {
@@ -97,7 +97,7 @@ const TopPage = () => {
 
   return (
     <>
-      <Parallax blur={2} bgImage="/assets/top-bg-time.jpg" bgImageAlt="リマインダー"
+      <Parallax blur={2} bgImage={props.rails_asset_path['top-bg-time.jpg']} bgImageAlt="リマインダー"
         strength={window.innerHeight} className={classes.fullParallax}
       >
         <div className={classes.fullParallaxChild}>

@@ -11,6 +11,14 @@
     <%= javascript_pack_tag 'application' %>
   </head>
   <body>
-    <%= react_component('AppLayout', { content: yield, is_sign_in: user_signed_in? }) %>
+    <%= react_component('AppLayout', {
+      content: yield,
+      is_sign_in: user_signed_in?,
+      rails_asset_path: {
+        'top-bg-time.jpg': asset_path('top-bg-time.jpg'),
+        'top-bg-cloud.jpg': asset_path('top-bg-cloud.jpg'),
+        'top-bg-pc-mobile.jpg': asset_path('top-bg-pc-mobile.jpg'),
+      }
+    }) %>
   </body>
 </html>

@@ -15,7 +15,7 @@ const MyRouter = (props) => {
     <>
     <Router>
       <Switch>
-        <Route exact path="/">{ props.is_sign_in ? <ReminderList /> : <TopPage /> }</Route>
+        <Route exact path="/">{ props.is_sign_in ? <ReminderList /> : <TopPage {...props} /> }</Route>
         <Route exact path="/reminders/new" render={() => <ReminderAddWrap />} />
         <Route><div dangerouslySetInnerHTML={{__html: props.content}} /></Route>{/* Rails yield */}
       </Switch >
