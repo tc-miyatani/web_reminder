@@ -58,7 +58,10 @@ const ReminderAddForm = (props) => {
 
   return (
     <>
-      <ReminderForm ref={formRef} title="リマインダー作成フォーム'" reminder={props.reminder} onChange={handleChange}>
+      <ReminderForm ref={formRef} onChange={handleChange} isLoading={isLoading}
+        title="リマインダー作成フォーム'"
+        reminder={props.reminder}
+      >
         <ButtonToggleLoading isLoading={isLoading} onClick={handleAdd}>
           登録
         </ButtonToggleLoading>

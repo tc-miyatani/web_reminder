@@ -76,7 +76,10 @@ const ReminderEditForm = (props) => {
 
   return (
     <>
-      <ReminderForm ref={formRef} title={`リマインダーID: ${props.reminder.id}`} reminder={props.reminder} onChange={handleChange}>
+      <ReminderForm ref={formRef} onChange={handleChange} isLoading={isLoading}
+        title={`リマインダーID: ${props.reminder.id}`}
+        reminder={props.reminder}
+      >
         <ButtonToggleLoading color="primary" isLoading={isLoading} onClick={handleUpdate}>
           更新
         </ButtonToggleLoading>
@@ -84,6 +87,7 @@ const ReminderEditForm = (props) => {
           削除
         </ButtonToggleLoading>
       </ReminderForm>
+
       <MessageDialog open={open} onClose={handleClose} msg={apiResponse.msg} />
       <br /><br />
     </>
