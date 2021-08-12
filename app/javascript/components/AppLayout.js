@@ -87,11 +87,13 @@ const AppLayout = (props) => {
         </AppBar>
       </Slide>
       <Toolbar />
-      <Container className={classes.flash_alerts}>
-        {props.flash_alerts.map(([severity, message], i) => (
-          <ClosableAlert key={i} severity={severity} message={message} />
-        ))}
-      </Container>
+      {props.flash_alerts.length > 0 &&
+        <Container className={classes.flash_alerts}>
+          {props.flash_alerts.map(([severity, message], i) => (
+            <ClosableAlert key={i} severity={severity} message={message} />
+          ))}
+        </Container>
+      }
       <MyRouter {...props}/>
       <footer className={classes.footer}>
         <Container maxWidth="sm">

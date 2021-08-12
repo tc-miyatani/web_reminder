@@ -15,6 +15,7 @@ const useStyles = makeStyles((theme) => ({
   container: {
     width: '100%',
     maxWidth: '600px',
+    marginTop: '20px',
   },
   cardTitle: {
     display: 'inline-block'
@@ -33,7 +34,7 @@ const ReminderForm = forwardRef((props, ref) => {
   return (
     <>
       <CssBaseline />
-      <Container fixed>
+      <Container maxWidth="sm">
         <Card className={classes.container}>
           <CardHeader title={props.title} />
           <CardContent>

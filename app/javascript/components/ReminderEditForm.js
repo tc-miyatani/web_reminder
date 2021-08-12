@@ -87,9 +87,7 @@ const ReminderEditForm = (props) => {
           削除
         </ButtonToggleLoading>
       </ReminderForm>
-
       <MessageDialog open={open} onClose={handleClose} msg={apiResponse.msg} />
-      <br /><br />
     </>
   );
 };
