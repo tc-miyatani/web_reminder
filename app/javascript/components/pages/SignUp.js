@@ -4,8 +4,6 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
@@ -13,11 +11,7 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import {
-  Card, CardHeader, CardContent, CardActions
-} from '@material-ui/core';
 import OutTitleCard from "common/OutTitleCard";
-import LineAddFriendButton from "../LineAddFriendButton";
 import TokenInput from "../common/TokenInput";
 
 const Copyright = () => {
@@ -38,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
     height: '100vh',
   },
   image: {
-    backgroundImage: 'url(/assets/sign-up-bg.jpg)',
+    backgroundImage: props => `url("${props.rails_asset_path['sign-up-bg.jpg']}")`,
     backgroundRepeat: 'no-repeat',
     backgroundColor:
       theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
@@ -78,7 +72,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const SignUp = (props) => {
-  const classes = useStyles();
+  const classes = useStyles(props);
 
   const isEmailError = !!props.validates_errors.full_messages;
   const emailErrorMessage = props.validates_errors.full_messages?.join('。');
@@ -95,7 +89,10 @@ const SignUp = (props) => {
                 type="submit"
                 fullWidth
                 variant="contained"
-                startIcon={<img src="/assets/line-login-icon.png" className={classes.lineIcon} />}
+                startIcon={
+                  <img className={classes.lineIcon}
+                    src={props.rails_asset_path['line-login-icon.png']}
+                  />}
                 className={classes.line}
                 href="/users/auth/line"
                 data-method="post"
@@ -103,7 +100,6 @@ const SignUp = (props) => {
                 LINEでログイン
           </Button>
           </div>
-          {/* <LineAddFriendButton lineId="655zornq" /> */}
         </OutTitleCard>
         <OutTitleCard title="メールアドレスで登録">
         <div className={classes.paper}>
@@ -142,12 +138,16 @@ const SignUp = (props) => {
               <Copyright />
             </Box>
           </form>
-          
         </div>
         </OutTitleCard>
       </Grid>
     </Grid>
   );
 }
+
+SignUp.propTypes = {
+  rails_asset_path: PropTypes.object,
+  validates_errors: PropTypes.object,
+};
 
 export default SignUp;
