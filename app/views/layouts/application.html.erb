@@ -12,7 +12,7 @@
     <%= javascript_pack_tag 'application' %>
   </head>
   <body>
-    <%= react_component('AppLayout', {
+    <%= react_component('MyRouter', {
       content: yield,
       is_sign_in: user_signed_in?,
       rails_asset_path: {
@@ -20,7 +20,8 @@
         'top-bg-cloud.jpg': asset_path('top-bg-cloud.jpg'),
         'top-bg-pc-mobile.jpg': asset_path('top-bg-pc-mobile.jpg'),
       },
-      flash_alerts: flash[:flash_alerts] || []
+      flash_alerts: flash[:flash_alerts] || [],
+      validates_errors: flash[:validates_errors] || {},
     }) %>
   </body>
 </html>

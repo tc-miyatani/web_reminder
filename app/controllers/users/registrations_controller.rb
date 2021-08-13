@@ -37,9 +37,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
     unless is_save
       # バリデーションエラー
-      flash[:email] = @user_auth_mail.email
-      flash[:errors] = {
-        model_name: @user_auth_mail.class.model_name.human.downcase,
+      flash[:validates_errors] = {
+        data: {email: @user_auth_mail.email},
         full_messages: @user_auth_mail.errors.full_messages
       }
       redirect_to action: :new and return

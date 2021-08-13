@@ -1,9 +1,11 @@
 import React from "react"
 import PropTypes from "prop-types"
 
-import ReminderList from 'ReminderList';
-import ReminderAddWrap from 'ReminderAddWrap';
-import TopPage from 'TopPage';
+import ReminderList from 'pages/ReminderList';
+import ReminderAddWrap from 'pages/ReminderAddWrap';
+import TopPage from 'pages/TopPage';
+import SignUp from "pages/SignUp";
+import AppLayout from "shares/AppLayout";
 
 import {
   BrowserRouter as Router,
@@ -15,8 +17,16 @@ const MyRouter = (props) => {
     <>
     <Router>
       <Switch>
-        <Route exact path="/">{ props.is_sign_in ? <ReminderList /> : <TopPage {...props} /> }</Route>
-        <Route exact path="/reminders/new" render={() => <ReminderAddWrap />} />
+        <Route exact path="/">
+          <AppLayout {...props}>
+            { props.is_sign_in ? <ReminderList /> : <TopPage {...props} /> }
+          </AppLayout>
+        </Route>
+        <Route exact path="/reminders/new">
+          <AppLayout {...props}><ReminderAddWrap /></AppLayout>
+        </Route>
+        <Route exact path="/users/sign_up" render={() => <SignUp {...props} />} />
+        {/* <Route exact path="/users/sign_in" render={() => 'Ababa'} /> */}
         <Route><div dangerouslySetInnerHTML={{__html: props.content}} /></Route>{/* Rails yield */}
       </Switch >
     </Router>
@@ -26,6 +36,10 @@ const MyRouter = (props) => {
 
 MyRouter.propTypes = {
   content: PropTypes.string,
+  is_sign_in: PropTypes.bool,
+  rails_asset_path: PropTypes.object,
+  flash_alerts: PropTypes.array,
+  validates_errors: PropTypes.object,
 };
 
 export default MyRouter
