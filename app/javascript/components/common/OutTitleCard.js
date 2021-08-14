@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     minHeight: '150px',
     width: '100%',
-    padding: '30px',
+    padding: '20px 30px',
   },
   title: {
     position: 'absolute',
