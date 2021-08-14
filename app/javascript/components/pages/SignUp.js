@@ -12,7 +12,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import OutTitleCard from "common/OutTitleCard";
-import TokenInput from "../common/TokenInput";
+import TokenInput from "common/TokenInput";
+import rails_assets from "modules/rails_assets";
 
 const Copyright = () => {
   return (
@@ -32,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     height: '100vh',
   },
   image: {
-    backgroundImage: props => `url("${props.rails_asset_path['sign-up-bg.jpg']}")`,
+    backgroundImage: rails_assets.bg('sign-up-bg.jpg'),
     backgroundRepeat: 'no-repeat',
     backgroundColor:
       theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
@@ -40,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundPosition: 'center',
   },
   paper: {
-    margin: theme.spacing(8, 4),
+    margin: '20px 40px',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -69,9 +70,15 @@ const useStyles = makeStyles((theme) => ({
     top: '20%',
     height: '23px',
   },
+  titleLogo: {
+    display: 'flex',
+    justifyContent: 'center',
+    margin: '40px 0',
+  },
 }));
 
 const SignUp = (props) => {
+  rails_assets.setAssets(props);
   const classes = useStyles(props);
 
   const isEmailError = !!props.validates_errors.full_messages;
@@ -83,6 +90,9 @@ const SignUp = (props) => {
       <CssBaseline />
       <Grid item xs={false} sm={4} md={7} className={classes.image} />
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+        <div className={classes.titleLogo}>
+          <img src={rails_assets('title-logo.png')} alt="CloudReminder" />
+        </div>
         <OutTitleCard title="LINEアカウントで新規登録">
         <div className={classes.paper}>
           <Button
@@ -91,7 +101,7 @@ const SignUp = (props) => {
                 variant="contained"
                 startIcon={
                   <img className={classes.lineIcon}
-                    src={props.rails_asset_path['line-login-icon.png']}
+                    src={rails_assets('line-login-icon.png')}
                   />}
                 className={classes.line}
                 href="/users/auth/line"
