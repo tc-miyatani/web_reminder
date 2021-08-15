@@ -8,21 +8,8 @@ import {
   Button, Link,
 
 } from "@material-ui/core";
-import MyRouter from "MyRouter";
 import ClosableAlert from "common/ClosableAlert";
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary">
-      {'Copyright © '}
-      <Link color="inherit" href="https://web-reminder.jp/">
-        master@web-reminder.jp
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import Copyright from "shares/Copyright";
 
 const useStyles = makeStyles((theme) => ({
   root: {

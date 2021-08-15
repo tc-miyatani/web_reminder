@@ -18,20 +18,22 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SignUp = (props) => {
+const SignIn = (props) => {
   rails_assets.setAssets(props);
   const classes = useStyles(props);
 
   const isEmailError = !!props.validates_errors.full_messages;
   const emailErrorMessage = props.validates_errors.full_messages?.join('。');
   const prevDataEmail = props.validates_errors.data?.email;
+  const isPasswordError = false;
+  const passwordErrorMessage = '';
 
   return (
     <SignForm {...props}
-      mailFromTitle="メールアドレスで登録"
+      mailFromTitle="メールアドレスでログイン"
     >
       <form className={classes.form}
-        action="/users" method="post"
+        action="/users/sign_in" method="post"
       >
         <TokenInput />
         <TextField
@@ -48,6 +50,20 @@ const SignUp = (props) => {
           helperText={emailErrorMessage}
           defaultValue={prevDataEmail}
         />
+        <TextField
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          id="password"
+          label="パスワード"
+          type="password"
+          name="user_auth_mail[password]"
+          autoComplete="current-password"
+          autoFocus
+          error={isPasswordError}
+          helperText={passwordErrorMessage}
+        />
         <Button
           type="submit"
           fullWidth
@@ -55,19 +71,14 @@ const SignUp = (props) => {
           color="primary"
           className={classes.submit}
         >
-          新規登録
+          ログイン
         </Button>
       </form>
       <Typography variant="body2" color="textPrimary" align='center'>
-        アカウントをお持ちの方は<Link color="primary" href="/users/sign_in">こちら</Link>
+        アカウントをお持ちでない方は<Link color="primary" href="/users/sign_up">こちら</Link>
       </Typography>
     </SignForm>
   );
 }
 
-SignUp.propTypes = {
-  rails_asset_path: PropTypes.object,
-  validates_errors: PropTypes.object,
-};
-
-export default SignUp;
+export default SignIn;
