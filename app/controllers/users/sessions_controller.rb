@@ -9,9 +9,14 @@ class Users::SessionsController < Devise::SessionsController
   # end
 
   # POST /resource/sign_in
-  # def create
-  #   super
-  # end
+  def create
+    flash[:validates_errors] = {
+      data: {email: sign_in_params[:email]},
+      full_messages: ['メールアドレスまたはパスワードが違います']
+    }
+    super
+    flash[:validates_errors] = nil
+  end
 
   # DELETE /resource/sign_out
   # def destroy

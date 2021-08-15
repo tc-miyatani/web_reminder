@@ -22,11 +22,9 @@ const SignIn = (props) => {
   rails_assets.setAssets(props);
   const classes = useStyles(props);
 
-  const isEmailError = !!props.validates_errors.full_messages;
-  const emailErrorMessage = props.validates_errors.full_messages?.join('。');
+  const isError = !!props.validates_errors.full_messages;
+  const errorMessage = props.validates_errors.full_messages?.join('。');
   const prevDataEmail = props.validates_errors.data?.email;
-  const isPasswordError = false;
-  const passwordErrorMessage = '';
 
   return (
     <SignForm {...props}
@@ -46,8 +44,8 @@ const SignIn = (props) => {
           name="user_auth_mail[email]"
           autoComplete="email"
           autoFocus
-          error={isEmailError}
-          helperText={emailErrorMessage}
+          error={isError}
+          helperText={errorMessage}
           defaultValue={prevDataEmail}
         />
         <TextField
@@ -61,8 +59,8 @@ const SignIn = (props) => {
           name="user_auth_mail[password]"
           autoComplete="current-password"
           autoFocus
-          error={isPasswordError}
-          helperText={passwordErrorMessage}
+          error={isError}
+          helperText={errorMessage}
         />
         <Button
           type="submit"
