@@ -5,6 +5,7 @@ import {
   CssBaseline, Container,
   Card, CardHeader, CardContent, CardActions,
 } from '@material-ui/core';
+import AppLayout from "shares/AppLayout";
 
 const useStyles = makeStyles((theme) => ({
   wrap: {
@@ -17,12 +18,12 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     maxWidth: '600px',
   },
-  email: {
-    color: theme.palette.primary.main
+  actions: {
+    justifyContent: 'center',
   },
 }));
 
-const RegisterMailSend = (props) => {
+const SimpleLayout = (props) => {
   const classes = useStyles();
 
   return (
@@ -30,17 +31,23 @@ const RegisterMailSend = (props) => {
       <CssBaseline />
       <Container maxWidth="sm" className={classes.wrap}>
         <Card className={classes.container}>
-          <CardHeader title="仮登録完了" align="center" />
+          <CardHeader title={props.title||''}  align="center" />
           <CardContent>
-            <b className={classes.email}>{props.flash.email}</b>にメールを送信しました。<br />
-            メールに記載されている認証用URLから本登録をお願いします。
+            {props.content}
           </CardContent>
-          <CardActions>
+          <CardActions className={classes.actions}>
+            {props.action}
           </CardActions>
         </Card>
       </Container>
     </>
   );
-}
+};
 
-export default RegisterMailSend;
+SimpleLayout.propTypes = {
+  title: PropTypes.string,
+  content: PropTypes.element,
+  action: PropTypes.element,
+};
+
+export default SimpleLayout;
