@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Users::SessionsController < Devise::SessionsController
+  before_action :redirect_root_signed_in!, only: [:new]
   # before_action :configure_sign_in_params, only: [:create]
 
   # GET /resource/sign_in
@@ -9,9 +10,14 @@ class Users::SessionsController < Devise::SessionsController
   # end
 
   # POST /resource/sign_in
-  # def create
-  #   super
-  # end
+  def create
+    flash[:validates_errors] = {
+      data: {email: sign_in_params[:email]},
+      full_messages: ['メールアドレスまたはパスワードが違います']
+    }
+    super
+    flash[:validates_errors] = nil
+  end
 
   # DELETE /resource/sign_out
   # def destroy

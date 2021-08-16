@@ -1,12 +1,15 @@
 # frozen_string_literal: true
 
 class Users::RegistrationsController < Devise::RegistrationsController
+  before_action :redirect_root_signed_in!
+
   # before_action :configure_sign_up_params, only: [:create]
   # before_action :configure_account_update_params, only: [:update]
 
   # GET /resource/sign_up
   def new
     @user_auth_mail = UserAuthMail.new(email: flash[:email] || '')
+    render 'react_pages/empty'
   end
 
   # POST /resource
@@ -37,21 +40,20 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
     unless is_save
       # バリデーションエラー
-      flash[:email] = @user_auth_mail.email
-      flash[:errors] = {
-        model_name: @user_auth_mail.class.model_name.human.downcase,
+      flash[:validates_errors] = {
+        data: {email: @user_auth_mail.email},
         full_messages: @user_auth_mail.errors.full_messages
       }
       redirect_to action: :new and return
     end
 
-    flash[:user_auth_mail] = @user_auth_mail.email
+    flash[users_auth_mail_send_path] = { email: @user_auth_mail.email }
     redirect_to action: :auth_mail_send
   end
 
   def auth_mail_send
-    @email = flash[:user_auth_mail]
     flash.keep
+    render 'react_pages/empty'
   end
 
   # GET /resource/edit
