@@ -12,13 +12,16 @@ import RepeatTypeContents from "reminder_add/RepeatTypeContents";
 import NotificationTime from 'reminder_add/NotificationTime';
 
 const useStyles = makeStyles((theme) => ({
+  wrap: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 'calc(100vh - 152px)', // 132px: header 64px + footer (20+24*2)px
+  },
   container: {
     width: '100%',
     maxWidth: '600px',
     marginTop: '20px',
-  },
-  cardTitle: {
-    display: 'inline-block'
   },
   backdrop: {
     zIndex: theme.zIndex.drawer + 1,
@@ -34,7 +37,7 @@ const ReminderForm = forwardRef((props, ref) => {
   return (
     <>
       <CssBaseline />
-      <Container maxWidth="sm">
+      <Container maxWidth="sm" className={props.single ? classes.wrap : ''}>
         <Card className={classes.container}>
           <CardHeader title={props.title} />
           <CardContent>

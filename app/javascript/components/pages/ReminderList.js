@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react"
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'modules/axios_with_csrf';
 import ReminderEditForm from "ReminderEditForm";
+import SimpleLayout from "shares/SimpleLayout";
 
 const useStyles = makeStyles(() => ({
   wrap: {
@@ -46,12 +47,27 @@ const ReminderList = () => {
     return () => console.log('unmounted!!!');
   }, []);
 
+  if (reminders.length == 0) {
+    return (
+        <SimpleLayout
+          title="リマインダーを作成しよう！"
+          content={(
+            <>
+              上部メニューの「リマインダー作成」からリマインダーを作成できます。
+            </>
+          )}
+        />
+    );
+  }
+
   return (
       <div className={classes.wrap}>
         { reminders.map(reminder => {
           return (
             <ReminderEditForm key={reminder.id} reminder={reminder}
-                              onChange={handleChange} onDelete={handleDelete} />
+                              onChange={handleChange} onDelete={handleDelete}
+                              single={reminders.length == 1}
+            />
           );
         }) }
       </div>
