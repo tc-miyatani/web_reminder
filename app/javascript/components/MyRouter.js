@@ -1,12 +1,12 @@
 import React from "react"
 import PropTypes from "prop-types"
-
+import AppLayout from "shares/AppLayout";
+import TopPage from 'pages/TopPage';
 import ReminderList from 'pages/ReminderList';
 import ReminderAddWrap from 'pages/ReminderAddWrap';
-import TopPage from 'pages/TopPage';
 import SignUp from "pages/SignUp";
 import SignIn from "pages/SignIn";
-import AppLayout from "shares/AppLayout";
+import RegisterMailSend from "pages/RegisterMailSend";
 
 import {
   BrowserRouter as Router,
@@ -28,6 +28,9 @@ const MyRouter = (props) => {
         </Route>
         <Route exact path="/users/sign_up" render={() => <SignUp {...props} />} />
         <Route exact path="/users/sign_in" render={() => <SignIn {...props} />} />
+        <Route exact path="/users/auth_mail_send">
+        <AppLayout {...props}><RegisterMailSend {...props} /></AppLayout>
+          </Route>
         <Route><div dangerouslySetInnerHTML={{__html: props.content}} /></Route>{/* Rails yield */}
       </Switch >
     </Router>

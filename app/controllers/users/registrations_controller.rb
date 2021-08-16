@@ -7,6 +7,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # GET /resource/sign_up
   def new
     @user_auth_mail = UserAuthMail.new(email: flash[:email] || '')
+    render 'react_pages/empty'
   end
 
   # POST /resource
@@ -44,13 +45,13 @@ class Users::RegistrationsController < Devise::RegistrationsController
       redirect_to action: :new and return
     end
 
-    flash[:user_auth_mail] = @user_auth_mail.email
+    flash[users_auth_mail_send_path] = { email: @user_auth_mail.email }
     redirect_to action: :auth_mail_send
   end
 
   def auth_mail_send
-    @email = flash[:user_auth_mail]
     flash.keep
+    render 'react_pages/empty'
   end
 
   # GET /resource/edit
