@@ -1,15 +1,16 @@
-import React, { forwardRef, useState } from "react"
+import React, { forwardRef} from "react"
 import PropTypes from "prop-types"
 import { makeStyles } from '@material-ui/core/styles';
 
 import {
   CssBaseline, Container,
   Card, CardHeader, CardContent, CardActions,
-  TextField, Backdrop, CircularProgress
+  Backdrop, CircularProgress
 } from '@material-ui/core';
 import RepeatType from 'reminder_add/RepeatType';
 import RepeatTypeContents from "reminder_add/RepeatTypeContents";
 import NotificationTime from 'reminder_add/NotificationTime';
+import MyTextField from "./common/MyTextField";
 
 const useStyles = makeStyles((theme) => ({
   wrap: {
@@ -26,6 +27,16 @@ const useStyles = makeStyles((theme) => ({
   backdrop: {
     zIndex: theme.zIndex.drawer + 1,
     color: '#fff',
+  },
+  messageTitle: {
+    fontSize: '12px',
+    color: 'rgba(0, 0, 0, 0.54)',
+    margin: '10px 0',
+  },
+  message: {
+    padding: '10px',
+    width: '100%',
+    minHeight: '50px',
   },
 }));
 
@@ -47,8 +58,9 @@ const ReminderForm = forwardRef((props, ref) => {
                 <>
                   <RepeatTypeContents reminder={props.reminder} onChange={handleChange} />
                   <NotificationTime reminder={props.reminder} onChange={handleChange} />
-                  <TextField  name="reminder[message]" label="通知メッセージ" required fullWidth
-                              defaultValue={props.reminder.message} />
+                  <MyTextField name="reminder[message]" defaultValue={props.reminder.message}
+                    aria-label="通知メッセージ" placeholder="通知メッセージ" required
+                  />
                 </>
               }
             </form>
