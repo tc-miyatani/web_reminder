@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Users::ConfirmationsController < Devise::ConfirmationsController
-  before_action :redirect_root_signed_in!
+  before_action :redirect_root_signed_in!, only: [:confirm]
   before_action :set_confirmation_token_and_user
 
   # GET /resource/confirmation/new
@@ -28,7 +28,7 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
     render 'react_pages/empty'
   end
 
-  def confirm    
+  def confirm
     @user_auth_mail.assign_attributes(confirmation_params)
     @user_auth_mail.confirmed_at = Time.zone.now # confirmed?がtrueになるようにしてpasswordのバリデーションを有効化する為
     unless @user_auth_mail.valid?

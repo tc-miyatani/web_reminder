@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Users::SessionsController < Devise::SessionsController
-  before_action :redirect_root_signed_in!, except: [:destroy]
+  before_action :redirect_root_signed_in!, only: [:new]
   # before_action :configure_sign_in_params, only: [:create]
 
   # GET /resource/sign_in
