@@ -6,8 +6,9 @@ import {
   AppBar, Toolbar, Typography,
   Container, CssBaseline, useScrollTrigger, Slide,
   Button, Link,
-
+  IconButton, MenuItem, Menu
 } from "@material-ui/core";
+import AccountCircle from '@material-ui/icons/AccountCircle';
 import ClosableAlert from "common/ClosableAlert";
 import Copyright from "shares/Copyright";
 
@@ -44,6 +45,15 @@ const AppLayout = (props) => {
 
   const trigger = useScrollTrigger({ target: window });
 
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <>
       <CssBaseline />
@@ -58,7 +68,35 @@ const AppLayout = (props) => {
                 return (
                   <>
                     <Button color="inherit" href="/reminders/new">リマインダー作成</Button>
-                    <Button color="inherit" href="/users/sign_out" data-method="delete">ログアウト</Button>
+                    <div>
+                      <IconButton
+                        aria-label="account of current user"
+                        aria-controls="menu-appbar"
+                        aria-haspopup="true"
+                        onClick={handleMenu}
+                        color="inherit"
+                      >
+                        <AccountCircle />
+                      </IconButton>
+                      <Menu
+                        id="menu-appbar"
+                        anchorEl={anchorEl}
+                        anchorOrigin={{
+                          vertical: 'top',
+                          horizontal: 'right',
+                        }}
+                        keepMounted
+                        transformOrigin={{
+                          vertical: 'top',
+                          horizontal: 'right',
+                        }}
+                        open={open}
+                        onClose={handleClose}
+                      >
+                        <MenuItem component="a" href="/users/profile/edit">マイアカウント</MenuItem>
+                        <MenuItem component="a" href="/users/sign_out" data-method="delete">ログアウト</MenuItem>
+                      </Menu>
+                    </div>
                   </>
                 );
               } else {
