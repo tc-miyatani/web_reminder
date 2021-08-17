@@ -9,15 +9,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ForgotPasswordSend = () => {
-  const classes = useStyles(props);
+const ForgotPasswordSend = (props) => {
+  const classes = useStyles();
 
   return (
     <SimpleLayout
       title="仮登録完了"
       content={(
         <>
-          <b className={classes.email}>{props.flash.email}</b>にメールを送信しました。<br />
+          <b className={classes.email}>{props.flash?.email}</b>にメールを送信しました。<br />
           メールに記載されているパスワードリセット用URLから新しいパスワードを設定してください。<br />
         </>
       )}
@@ -26,7 +26,7 @@ const ForgotPasswordSend = () => {
 };
 
 ForgotPasswordSend.propTypes = {
-  flash: PropTypes.string,
+  flash: PropTypes.object,
 };
 
 export default ForgotPasswordSend;

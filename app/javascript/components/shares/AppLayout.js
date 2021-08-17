@@ -37,7 +37,13 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
     top: '64px',
     zIndex: '9999',
-  }
+  },
+  wrap: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    minHeight: 'calc(100vh - 132px)', // 132px: header 64px + footer (20+24*2)px
+  },
 }));
 
 const AppLayout = (props) => {
@@ -119,7 +125,10 @@ const AppLayout = (props) => {
           ))}
         </Container>
       }
-      { props.children }
+      <CssBaseline />
+      <Container maxWidth="sm" className={classes.wrap}>
+        { props.children }
+      </Container>  
       <footer className={classes.footer}>
         <Container maxWidth="sm">
           <Copyright />

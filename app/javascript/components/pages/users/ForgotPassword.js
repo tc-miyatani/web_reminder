@@ -9,7 +9,7 @@ import TokenInput from "common/TokenInput";
 
 const useStyles = makeStyles((theme) => ({
   form: {
-
+    width: '100%',
   },
   submit: {
 
@@ -19,18 +19,16 @@ const useStyles = makeStyles((theme) => ({
 const ForgotPassword = (props) => {
   const classes = useStyles();
 
-  const isEmailError = false;
-  const emailErrorMessage = '';
-  const prevDataEmail = '';
+  const isEmailError = !!props.flash?.error;
+  const emailErrorMessage = props.flash?.error;
+  const prevDataEmail = props.flash?.email;
 
   return (
-    <SimpleLayout
-      title="パスワード再設定メールを送る"
-      content={(
-        <>
-          <form className={classes.form}
-            action="/users/password" method="post"
-          >
+    <form className={classes.form} action="/users/password" method="post">
+      <SimpleLayout
+        title="パスワード再設定メールを送る"
+        content={(
+          <>
             <TokenInput />
             <TextField
               variant="outlined"
@@ -46,21 +44,20 @@ const ForgotPassword = (props) => {
               helperText={emailErrorMessage}
               defaultValue={prevDataEmail}
             />
-            <br />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-            >
-              送信
-            </Button>
-          </form>
-        </>
-      )}
-    />
+          </>
+        )}
+        action={(
+          <Button type="submit" variant="contained" color="primary">
+            送信
+          </Button>
+        )}
+      />
+    </form>
   );
 }
+
+ForgotPassword.propTypes = {
+  flash: PropTypes.object,
+};
 
 export default ForgotPassword;
