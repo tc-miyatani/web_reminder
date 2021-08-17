@@ -61,16 +61,16 @@ const ReminderList = () => {
   }
 
   return (
-      <div className={classes.wrap}>
+      <>
         { reminders.map(reminder => {
           return (
             <ReminderEditForm key={reminder.id} reminder={reminder}
                               onChange={handleChange} onDelete={handleDelete}
-                              single={reminders.length == 1}
             />
           );
         }) }
-      </div>
+        <div className={classes.wrap}></div>
+      </>
   );
 }
 

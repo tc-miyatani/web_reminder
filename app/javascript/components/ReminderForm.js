@@ -13,12 +13,6 @@ import NotificationTime from 'reminder_add/NotificationTime';
 import MyTextField from "./common/MyTextField";
 
 const useStyles = makeStyles((theme) => ({
-  wrap: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 'calc(100vh - 152px)', // 132px: header 64px + footer (20+24*2)px
-  },
   container: {
     width: '100%',
     maxWidth: '600px',
@@ -47,8 +41,6 @@ const ReminderForm = forwardRef((props, ref) => {
 
   return (
     <>
-      <CssBaseline />
-      <Container maxWidth="sm" className={props.single ? classes.wrap : ''}>
         <Card className={classes.container}>
           <CardHeader title={props.title} />
           <CardContent>
@@ -73,7 +65,6 @@ const ReminderForm = forwardRef((props, ref) => {
             }
           </CardActions>
         </Card>
-      </Container>
       <Backdrop className={classes.backdrop} open={props.isLoading}>
         <CircularProgress color="inherit" />
       </Backdrop>

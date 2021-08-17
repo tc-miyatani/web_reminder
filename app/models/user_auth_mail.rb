@@ -1,6 +1,6 @@
 class UserAuthMail < ApplicationRecord
   devise  :database_authenticatable,
-          :registerable, :confirmable,
+          :registerable, :confirmable, :recoverable,
           :validatable
 
   belongs_to :user, optional: true

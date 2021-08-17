@@ -75,6 +75,9 @@ const SignIn = (props) => {
       <Typography variant="body2" color="textPrimary" align='center'>
         アカウントをお持ちでない方は<Link color="primary" href="/users/sign_up">こちら</Link>
       </Typography>
+      <Typography variant="body2" color="textPrimary" align='center'>
+        パスワードをお忘れの方は<Link color="primary" href="/users/password/new">こちら</Link>
+      </Typography>
     </SignForm>
   );
 }
