@@ -22,9 +22,10 @@ const ReminderAddWrap = () => {
   const handleChange = obj => setReminder({...reminder, ...obj});
 
   return (
-    <div className={classes.wrap}>
+    <>
       <ReminderAddForm reminder={reminder} onChange={handleChange} />
-    </div>
+      <div className={classes.wrap}></div>
+    </>
   );
 };
 

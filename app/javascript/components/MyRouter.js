@@ -16,7 +16,6 @@ import MyAccount             from "pages/users/MyAccount";
 import ForgotPassword        from 'pages/users/ForgotPassword';
 import ForgotPasswordSend    from 'pages/users/ForgotPasswordSend.js';
 import ResetPassword         from "pages/users/ResetPassword";
-import ResetPasswordComplete from "pages/users/ResetPasswordComplete";
 
 const MyRouter = (props) => {
   return (
@@ -50,9 +49,6 @@ const MyRouter = (props) => {
         </Route>
         <Route exact path="/users/password/edit">
           <AppLayout {...props}><ResetPassword {...props} /></AppLayout>
-        </Route>
-        <Route exact path="/users/password/complete">
-          <AppLayout {...props}><ResetPasswordComplete {...props} /></AppLayout>
         </Route>
         <Route><div dangerouslySetInnerHTML={{__html: props.content}} /></Route>{/* Rails yield */}
       </Switch >
