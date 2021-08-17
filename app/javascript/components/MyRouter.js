@@ -9,6 +9,7 @@ import SignUp from "pages/SignUp";
 import SignIn from "pages/SignIn";
 import RegisterMailSend from "pages/RegisterMailSend";
 import ConfirmPage from "pages/ConfirmPage";
+import MyAccount from "pages/MyAccount";
 
 import {
   BrowserRouter as Router,
@@ -36,7 +37,9 @@ const MyRouter = (props) => {
         <Route exact path="/users/confirmation">
           <AppLayout {...props}><ConfirmPage {...props} /></AppLayout>
         </Route>
-
+        <Route exact path="/users/profile/edit">
+          <AppLayout {...props}><MyAccount {...props} /></AppLayout>
+        </Route>
         <Route><div dangerouslySetInnerHTML={{__html: props.content}} /></Route>{/* Rails yield */}
       </Switch >
     </Router>

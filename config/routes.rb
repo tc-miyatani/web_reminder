@@ -14,12 +14,14 @@ Rails.application.routes.draw do
   }, path: 'users'
 
   root to: 'react_pages#empty'
-  resource :user, only: [:edit, :update], controller: 'reminders/mypages',
+  resource :user, only: [:edit], controller: 'reminders/mypages',
                   path: 'users/profile', as: 'user_profile'
 
   resources :reminders, only: [:new], controller: 'react_pages'
   scope :api, format: 'json' do
     resources :reminders, only: [:create, :update, :destroy], controller: 'reminders/mains'
     resource  :reminders, only: [:show],                      controller: 'reminders/mains'
+    resource :user, only: :update,  controller: 'reminders/mypages', path: 'users/profile', as: 'api_user_profile'
+    resource :user, only: :destroy, controller: 'reminders/mypages', path: 'users', as: 'api_user'
   end
 end

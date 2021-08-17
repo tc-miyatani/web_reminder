@@ -5,7 +5,6 @@ import {
   CssBaseline, Container,
   Card, CardHeader, CardContent, CardActions,
 } from '@material-ui/core';
-import AppLayout from "shares/AppLayout";
 
 const useStyles = makeStyles((theme) => ({
   wrap: {
