@@ -2,24 +2,37 @@
 
 class Users::PasswordsController < Devise::PasswordsController
   # GET /resource/password/new
-  # def new
-  #   super
-  # end
+  def new
+    render 'react_pages/empty'
+  end
 
   # POST /resource/password
-  # def create
-  #   super
-  # end
+  def create
+    binding.pry
+    super do |x|
+      binding.pry
+    end
+  end
+
+  def forgot_send
+    render 'react_pages/empty'
+  end
 
   # GET /resource/password/edit?reset_password_token=abcdef
-  # def edit
-  #   super
-  # end
+  def edit
+    binding.pry
+    super
+  end
 
   # PUT /resource/password
-  # def update
-  #   super
-  # end
+  def update
+    binding.pry
+    super
+  end
+
+  def complete
+    render 'react_pages/empty'
+  end
 
   # protected
 

@@ -1,20 +1,22 @@
 import React from "react"
 import PropTypes from "prop-types"
-import AppLayout from "shares/AppLayout";
-import SimpleLayout from "shares/SimpleLayout";
-import TopPage from 'pages/TopPage';
-import ReminderList from 'pages/ReminderList';
-import ReminderAddWrap from 'pages/ReminderAddWrap';
-import SignUp from "pages/SignUp";
-import SignIn from "pages/SignIn";
-import RegisterMailSend from "pages/RegisterMailSend";
-import ConfirmPage from "pages/ConfirmPage";
-import MyAccount from "pages/MyAccount";
-
 import {
   BrowserRouter as Router,
   Switch, Route
 } from 'react-router-dom'
+import AppLayout from "shares/AppLayout";
+import TopPage         from 'pages/TopPage';
+import ReminderList    from 'pages/ReminderList';
+import ReminderAddWrap from 'pages/ReminderAddWrap';
+import SignUp                from "pages/users/SignUp";
+import SignIn                from "pages/users/SignIn";
+import RegisterMailSend      from "pages/users/RegisterMailSend";
+import ConfirmPage           from "pages/users/ConfirmPage";
+import MyAccount             from "pages/users/MyAccount";
+import ForgotPassword        from 'pages/users/ForgotPassword';
+import ForgotPasswordSend    from 'pages/users/ForgotPasswordSend.js';
+import ResetPassword         from "pages/users/ResetPassword";
+import ResetPasswordComplete from "pages/users/ResetPasswordComplete";
 
 const MyRouter = (props) => {
   return (
@@ -39,6 +41,18 @@ const MyRouter = (props) => {
         </Route>
         <Route exact path="/users/profile/edit">
           <AppLayout {...props}><MyAccount {...props} /></AppLayout>
+        </Route>
+        <Route exact path="/users/password/new">
+          <AppLayout {...props}><ForgotPassword {...props} /></AppLayout>
+        </Route>
+        <Route exact path="/users/password/send">
+          <AppLayout {...props}><ForgotPasswordSend {...props} /></AppLayout>
+        </Route>
+        <Route exact path="/users/password/edit">
+          <AppLayout {...props}><ResetPassword {...props} /></AppLayout>
+        </Route>
+        <Route exact path="/users/password/complete">
+          <AppLayout {...props}><ResetPasswordComplete {...props} /></AppLayout>
         </Route>
         <Route><div dangerouslySetInnerHTML={{__html: props.content}} /></Route>{/* Rails yield */}
       </Switch >
