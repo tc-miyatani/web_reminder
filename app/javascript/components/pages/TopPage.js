@@ -13,6 +13,7 @@ import 'animate.css/animate.min.css';
 const useStyles = makeStyles((theme)=>({
   fullParallax: {
     height: '100vh',
+    width: '100%',
     '& .react-parallax-bgimage': {
       height: '100vh !important',
       width: '100vw !important',

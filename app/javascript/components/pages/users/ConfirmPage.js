@@ -27,9 +27,6 @@ const ConfirmPage = (props) => {
   const isError = !!props.flash.validate_errors;
   const errorMessage = props.flash.validate_errors?.full_messages.join('。');
   const prevDataNickname = props.flash?.nickname;
-  console.log(props);
-  console.log(isError);
-  console.log(errorMessage);
 
   return (
     <form action="/users/confirmation" method="post">

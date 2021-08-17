@@ -11,9 +11,6 @@ const useStyles = makeStyles((theme) => ({
   form: {
     width: '100%',
   },
-  submit: {
-
-  },
 }));
 
 const ForgotPassword = (props) => {

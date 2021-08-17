@@ -2,7 +2,7 @@
 
 class Users::PasswordsController < Devise::PasswordsController
   before_action :redirect_root_signed_in!, only: [:new, :edit]
-  before_action :set_reset_password_token_and_user, only: [:edit, :update]
+  before_action :set_reset_password_token, only: [:edit, :update]
 
   # GET /resource/password/new
   def new
@@ -14,11 +14,11 @@ class Users::PasswordsController < Devise::PasswordsController
     user_auth_mail = UserAuthMail.find_by(email_params)
     if user_auth_mail.blank?
       # 存在しないメールアドレス
-      flash[new_user_auth_mail_password_path] = {
+      #   送信完了メッセージを表示する
+      flash[users_password_send_path] = {
         email: email_params[:email],
-        error: '登録されていないメールアドレスです',
       }
-      redirect_to action: :new and return
+      redirect_to action: :forgot_send and return
     end
 
     flash[users_password_send_path] = {
@@ -44,31 +44,30 @@ class Users::PasswordsController < Devise::PasswordsController
 
   # GET /resource/password/edit?reset_password_token=abcdef
   def edit
-    if @user_auth_mail.blank?
+    user_auth_mail = UserAuthMail.with_reset_password_token(@reset_password_token)
+    if user_auth_mail.blank?
       flash[edit_user_auth_mail_password_path] = {
         error: '無効な処理です。再度、パスワード再設定メールを送信からお試しください。'
       }
+    elsif flash[edit_user_auth_mail_password_path].present?
+      flash[edit_user_auth_mail_password_path][:error] = nil
     end
     render 'react_pages/empty'
   end
 
   # PUT /resource/password
   def update
-    if @user_auth_mail.blank?
+    user_auth_mail = UserAuthMail.reset_password_by_token(reset_password_params)
+    unless user_auth_mail.save
       flash[edit_user_auth_mail_password_path] = {
-        error: '無効な処理です。再度お試しください。'
+        validate_error_messages: user_auth_mail.errors.full_messages
       }
-      redirect_to root_path and return
+      redirect_to action: :edit, reset_password_token: @reset_password_token and return
     end
-    binding.pry
-    # @user_auth_mail.reset_password
-    # sign_in(:user, @user_auth_mail.user)
-    # sign_in(:user_auth_mail, @user_auth_mail)
-    # redirect_to action: :complete
-  end
-
-  def complete
-    render 'react_pages/empty'
+    sign_in(:user, user_auth_mail.user)
+    sign_in(:user_auth_mail, user_auth_mail)
+    flash[:flash_alerts] = [['success', 'パスワードの再設定が完了しました！']]
+    redirect_to root_path
   end
 
   private
@@ -77,29 +76,28 @@ class Users::PasswordsController < Devise::PasswordsController
     params.require(:user_auth_mail).permit(:email)
   end
 
-  def password_params
-    params.require(:user_auth_mail).permit(:password)
+  def reset_password_params
+    params.require(:user_auth_mail)
+          .permit(:password, :password_confirmation)
+          .merge(reset_password_token: @reset_password_token)
   end
 
-  def set_reset_password_token_and_user
+  def set_reset_password_token
     if params[:reset_password_token].present?
       @reset_password_token = params[:reset_password_token]
       flash[:reset_password_token] = @reset_password_token
     elsif flash[:reset_password_token].present?
       @reset_password_token = flash[:reset_password_token]
-      flash.keep(:reset_password_token)
     else
       @reset_password_token = nil
-      @user_auth_mail = nil
-      return
     end
-    @user_auth_mail = UserAuthMail.find_by_reset_password_token(@reset_password_token)
+    
   end
 
-  # protected
+  protected
 
   def after_resetting_password_path_for(resource)
-    users_password_complete_path
+    root_path
   end
 
   # The path used after sending reset password instructions

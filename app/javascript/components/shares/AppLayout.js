@@ -40,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
   },
   wrap: {
     display: 'flex',
+    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
     minHeight: 'calc(100vh - 132px)', // 132px: header 64px + footer (20+24*2)px
@@ -126,9 +127,9 @@ const AppLayout = (props) => {
         </Container>
       }
       <CssBaseline />
-      <Container maxWidth="sm" className={classes.wrap}>
+      <div className={classes.wrap}>
         { props.children }
-      </Container>  
+      </div>  
       <footer className={classes.footer}>
         <Container maxWidth="sm">
           <Copyright />

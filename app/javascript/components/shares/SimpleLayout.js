@@ -10,6 +10,7 @@ const useStyles = makeStyles((theme) => ({
   container: {
     width: '100%',
     maxWidth: '600px',
+    margin: '0 auto',
   },
   actions: {
     justifyContent: 'center',

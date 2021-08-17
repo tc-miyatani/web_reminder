@@ -9,7 +9,6 @@ Rails.application.routes.draw do
     get   'users/auth_mail_send', to: 'users/registrations#auth_mail_send'
     patch 'users/confirmation',   to: 'users/confirmations#confirm'
     get   'users/password/send',     to: 'users/passwords#forgot_send'
-    get   'users/password/complete', to: 'users/passwords#complete'
   end
 
   devise_for :user_auth_providers, controllers: {
