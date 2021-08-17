@@ -14,7 +14,7 @@ const ForgotPasswordSend = (props) => {
 
   return (
     <SimpleLayout
-      title="仮登録完了"
+      title="パスワード再設定メール送信完了"
       content={(
         <>
           <b className={classes.email}>{props.flash?.email}</b>にメールを送信しました。<br />

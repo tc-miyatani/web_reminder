@@ -29,13 +29,15 @@ class Users::PasswordsController < Devise::PasswordsController
       user_auth_mail.send_confirmation_instructions # 仮登録完了メール再送
     else
       # 本登録済みのアカウント
-      binding.pry
       user_auth_mail.send_reset_password_instructions # パスワードリセットメール
     end
     redirect_to action: :forgot_send
   end
 
   def forgot_send
+    if flash[users_password_send_path].blank?
+      redirect_to root_path and return
+    end
     flash.keep(users_password_send_path)
     render 'react_pages/empty'
   end
