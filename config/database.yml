@@ -15,7 +15,7 @@ default: &default
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   username: root
   password: <%= ENV['WEB_REMINDER_DATABASE_PASSWORD'] %>
-  socket: /run/mysqld/mysqld.sock
+  host: db
 
 development:
   <<: *default
