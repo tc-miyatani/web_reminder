@@ -19,7 +19,6 @@ jobs:
         environment:
           MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
           MYSQL_DATABASE: cloud_reminder_test
-          MYSQL_USER: root
           TZ: "Japan"
     environment:
       BUNDLE_JOBS: "3"
