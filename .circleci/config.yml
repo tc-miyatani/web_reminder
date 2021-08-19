@@ -25,6 +25,7 @@ jobs:
       BUNDLE_RETRY: "3"
       APP_DATABASE_HOST: "127.0.0.1"
       RAILS_ENV: test
+      MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
     working_directory: ~/web_reminder
     steps:
       - checkout:
