@@ -59,4 +59,5 @@
 #     auth_methods: %w(publickey password)
 #     # password: "please use keys"
 #   }
-server '18.180.243.90', user: 'ec2-user', roles: %w{app db web}
+# server '18.180.243.90', user: 'ec2-user', roles: %w{app db web}
+server 'web-reminder.jp', user: 'ec2-user', roles: %w{app db web}
