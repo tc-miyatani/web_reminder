@@ -1,11 +1,24 @@
-app_path = File.expand_path('../../../', __FILE__)
-worker_processes 1
-working_directory "#{app_path}/current"
-pid "#{app_path}/shared/tmp/pids/unicorn.pid"
-listen "#{app_path}/shared/tmp/sockets/unicorn.sock"
-stderr_path "#{app_path}/shared/log/unicorn.stderr.log"
-stdout_path "#{app_path}/shared/log/unicorn.stdout.log"
-timeout 60
+rails_env = ENV['RAILS_ENV'] || 'development'
+
+if rails_env == 'development'
+  app_path = File.expand_path('../../', __FILE__)
+  worker_processes 1
+  working_directory app_path
+  pid "#{app_path}/tmp/pids/unicorn.pid"
+  listen "#{app_path}/tmp/sockets/unicorn.sock"
+  stderr_path "#{app_path}/log/unicorn.stderr.log"
+  stdout_path "#{app_path}/log/unicorn.stdout.log"
+  timeout 60
+else
+  app_path = File.expand_path('../../../', __FILE__)
+  worker_processes 1
+  working_directory "#{app_path}/current"
+  pid "#{app_path}/shared/tmp/pids/unicorn.pid"
+  listen "#{app_path}/shared/tmp/sockets/unicorn.sock"
+  stderr_path "#{app_path}/shared/log/unicorn.stderr.log"
+  stdout_path "#{app_path}/shared/log/unicorn.stdout.log"
+  timeout 60
+end
 
 preload_app true
 GC.respond_to?(:copy_on_write_friendly=) && GC.copy_on_write_friendly = true
