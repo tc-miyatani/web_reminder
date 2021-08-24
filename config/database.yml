@@ -1,10 +1,19 @@
-default: &default
-  adapter: mysql2
+docker: &docker
   encoding: utf8mb4
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   username: root
   password: <%= ENV['MYSQL_ROOT_PASSWORD'] %>
   host: db
+
+no_docker: &no_docker
+  encoding: utf8
+  username: root
+  password:
+  socket: /tmp/mysql.sock
+
+default: &default
+  <<: *<%= ENV.fetch("DB_TYPE") { 'no_docker' } %>
+  adapter: mysql2
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:
   <<: *default
@@ -13,7 +22,7 @@ development:
 test:
   <<: *default
   database: cloud_reminder_test
-  host: <%= ENV.fetch("APP_DATABASE_HOST") { 'db' } %>
+  # host: <%= ENV.fetch("APP_DATABASE_HOST") { 'db' } %>
 
 production:
   <<: *default
