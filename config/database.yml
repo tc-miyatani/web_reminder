@@ -10,6 +10,10 @@ no_docker: &no_docker
   password:
   socket: /tmp/mysql.sock
 
+no_docker_production: &no_docker_production
+  password: <%= ENV['DATABASE_PASSWORD'] %>
+  socket: /var/lib/mysql/mysql.sock
+
 default: &default
   <<: *<%= ENV.fetch("DB_TYPE") { 'no_docker' } %>
   adapter: mysql2
@@ -26,4 +30,5 @@ test:
 
 production:
   <<: *default
+  <<: *<%= ENV.fetch("DB_TYPE") { 'no_docker_production' } %>
   database: cloud_reminder_production
