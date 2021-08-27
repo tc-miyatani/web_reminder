@@ -57,7 +57,7 @@ Web上でリマインダーを設定して、設定した日時にLINEやメー�
 
 # インフラ構成
 
-![LINEログイン](https://github.com/tc-miyatani/web_reminder/raw/readme-images/imgs/infra.gif?raw=true)
+![LINEログイン](https://github.com/tc-miyatani/web_reminder/raw/readme-images/imgs/infra.jpg?raw=true)
 
 # データベース設計
 
