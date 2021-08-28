@@ -49,15 +49,46 @@ Web上でリマインダーを設定して、設定した日時にLINEやメー�
 
 ![LINEログイン](https://github.com/tc-miyatani/web_reminder/raw/readme-images/imgs/user_name_update.gif?raw=true)
 
+# 使用技術
 
-# 目指した課題解決
+* バックエンド
+  * Ruby 2.6.5
+  * Ruby on Rails 6.0.0
+* フロントエンド
+  * React(react-rails) / Material-UI
+* API
+  * Lineログイン / Line Messaging API
+* インフラ
+  * MySQL 5.6 (ローカル) / MariaDB 5.5 (AWS)
+  * AWS
+    * VPC
+    * EC2
+    * Route53
+  * SSL/TLS: Let's Encrypt (Certbot)
+  * cron (whenever): 任意のタイミングで通知できるようにする為
+  * Zoho Mail: メール認証・メール通知時の送信元を独自ドメインメールにする為
+  * Docker/Docker-compose
+    * Dockerの構成詳細は[tc-miyatani/my_docker](https://github.com/tc-miyatani/my_docker)のリポジトリに分けています。
+  * Capistrano3
+  * CircleCI(自動テストのみ)
 
-忘れてはいけないことを通知によって思い出させることで日々のタスクのやり忘れを防ぎます。
-その通知先として、それぞれのユーザーが自分が特によく確認するものに通知させるように設定できるようにすることで、リマインダーを設定したがその通知にも気付かなかったといったことを少しでも減らすことが出来れば良いと考えました。
+# インフラ構成図
 
-# インフラ構成
+![インフラ構成図](https://github.com/tc-miyatani/web_reminder/raw/readme-images/imgs/infra.jpg?raw=true)
 
-![LINEログイン](https://github.com/tc-miyatani/web_reminder/raw/readme-images/imgs/infra.jpg?raw=true)
+# 機能一覧
+
+* ユーザー登録、ログイン機能(device)
+  * メール認証、パスワードリセット
+  * LINEログイン
+* リマインダー登録・編集・削除機能(Ajax(Axios))
+* メール通知機能
+* LINE通知機能
+
+# テスト
+
+* RSpec
+  * 単体テスト(model, service)
 
 # データベース設計
 
@@ -73,8 +104,6 @@ Association
 
 + has_one :user_auth_mail
 + has_one :user_auth_provider
-+ has_many :user_notification_mails
-+ has_many :user_notification_providers
 + has_many :reminders
 
 ## user_auth_mails
@@ -86,7 +115,8 @@ Association
 | confirmation_token   | string     | null: false |
 | confirmed_at         | string     | null: false |
 | confirmation_sent_at | string     | null: false |
-| unconfirmed_email    | string     | null: false |
+| reset_password_token   | string     | null: false |
+| reset_password_sent_at | string     | null: false |
 | user                 | references | foreign_key: true |
 
 Association
