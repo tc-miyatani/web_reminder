@@ -40,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const MyAccount = (props) => {
+  console.log(props);
   const formUpdateRef = useRef();
   const formDeleteRef = useRef();
 
@@ -108,6 +109,23 @@ const MyAccount = (props) => {
     if (isDelete) { location.href = '/'; }
   };
 
+
+  const account_type = () => {
+    if (props.user_auth_model.email) {
+      return (
+        <>
+          <span>メールアカウント: { props.user_auth_model.email }</span>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <span>LINEアカウント</span>
+        </>
+      );
+    }
+  };
+
   return (
     <>
       <CssBaseline />
@@ -117,6 +135,7 @@ const MyAccount = (props) => {
             <CardHeader title="アカウント情報"  align="center" />
             <CardContent>
               <input type="hidden" name="_method" value="patch" />
+              { account_type() }
               <TokenInput />
               <TextField
                 margin="normal"
