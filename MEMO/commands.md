@@ -101,3 +101,18 @@ sudo systemctl stop nginx
 sudo certbot-auto certonly --standalone -d web-reminder.jp -m master@web-reminder.jp --agree-tos -n
 sudo systemctl start nginx
 ```
+
+# EC2再起動時
+
+```zsh
+sudo systemctl start mariadb
+sudo systemctl start nginx
+```
+
+# 開発時のwebpacker
+
+react開発時、毎回１からbuildせずにホットリロードさせる
+
+```zsh
+bin/webpack-dev-server
+```
