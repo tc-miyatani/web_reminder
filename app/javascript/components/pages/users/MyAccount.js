@@ -109,18 +109,17 @@ const MyAccount = (props) => {
     if (isDelete) { location.href = '/'; }
   };
 
-
   const account_type = () => {
     if (props.user_auth_model.email) {
       return (
         <>
-          <span>メールアカウント: { props.user_auth_model.email }</span>
+          <span>アカウントタイプ： メールアカウント({ props.user_auth_model.email })</span>
         </>
       );
     } else {
       return (
         <>
-          <span>LINEアカウント</span>
+          <span>アカウントタイプ： LINEアカウント</span>
         </>
       );
     }
