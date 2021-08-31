@@ -16,7 +16,8 @@
     <%= react_component('MyRouter', {
       content: yield,
       is_sign_in: user_signed_in?,
-      user: current_user || nil,
+      user: current_user,
+      user_auth_model: current_user_auth_model,
       rails_asset_path: assets_all, # react_pages_helper.rb
       flash: flash[request.path_info] || {},
       flash_alerts: flash[:flash_alerts] || [],
