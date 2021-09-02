@@ -20,10 +20,12 @@ Rails.application.routes.draw do
                   path: 'users/profile', as: 'user_profile'
 
   resources :reminders, only: [:new], controller: 'react_pages'
+  get '/user_mail/confirm/:confirmation_token', to:  'reminders/mails#confirm', as: 'user_mail_confirm'
   scope :api, format: 'json' do
     resources :reminders, only: [:create, :update, :destroy], controller: 'reminders/mains'
     resource  :reminders, only: [:show],                      controller: 'reminders/mains'
     resource :user, only: :update,  controller: 'reminders/mypages', path: 'users/profile', as: 'api_user_profile'
     resource :user, only: :destroy, controller: 'reminders/mypages', path: 'users', as: 'api_user'
+    resource  :user_mail,  only: [:create, :update, :destroy], controller: 'reminders/mails', as: 'api_user_mail'
   end
 end
