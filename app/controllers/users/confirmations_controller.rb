@@ -41,9 +41,17 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
       redirect_to action: :show, confirmation_token: @confirmation_token and return
     end
     ActiveRecord::Base.transaction(joinable: false, requires_new: true) do
-      user = @user_auth_mail.create_user(nickname: params[:user_auth_mail][:nickname])
+      user = @user_auth_mail.create_user(
+        nickname: params[:user_auth_mail][:nickname],
+        auth_type: User::AUTH_TYPE_MAIL
+      )
       @user_auth_mail.confirmation_token = nil
       @user_auth_mail.save
+      user.user_mails.create(
+        email: @user_auth_mail.email,
+        confirmed_at: @user_auth_mail.confirmed_at
+      )
+      
       sign_in(:user, user)
       sign_in(:user_auth_mail, @user_auth_mail)
     end

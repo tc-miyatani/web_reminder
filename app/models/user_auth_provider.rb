@@ -11,7 +11,7 @@ class UserAuthProvider < ApplicationRecord
 
   def self.create_with_user(user_auth_provider_params)
     user_auth_provider = self.new(user_auth_provider_params)
-    user = user_auth_provider.create_user
+    user = user_auth_provider.create_user(auth_type: User::AUTH_TYPE_PROVIDER)
     user_auth_provider.save
     user_auth_provider
   end
