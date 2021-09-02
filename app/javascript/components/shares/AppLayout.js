@@ -37,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
     top: '64px',
     zIndex: '9999',
+    maxWidth: 'none !important',
   },
   wrap: {
     display: 'flex',
