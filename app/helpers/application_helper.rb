@@ -16,4 +16,17 @@ module ApplicationHelper
   def user_signed_in?
     user_auth_mail_signed_in? || user_auth_provider_signed_in?
   end
+
+  def current_user_data
+    JSON.parse(
+      current_user.to_json(
+        include: {
+          user_auth_mail: {},
+          user_auth_provider: {},
+          user_mails: {},
+        },
+        except: []
+      )
+    )
+  end
 end
