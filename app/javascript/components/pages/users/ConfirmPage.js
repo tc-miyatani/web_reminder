@@ -56,7 +56,6 @@ const ConfirmPage = (props) => {
               type="password"
               name="user_auth_mail[password]"
               autoComplete="current-password"
-              autoFocus
               error={isError}
               helperText={errorMessage}
             />
@@ -69,7 +68,6 @@ const ConfirmPage = (props) => {
               label="パスワード"
               type="password"
               name="user_auth_mail[password_confirmation]"
-              autoFocus
               error={isError}
             />
 
