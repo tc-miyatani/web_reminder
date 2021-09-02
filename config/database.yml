@@ -15,8 +15,13 @@ no_docker_production: &no_docker_production
   password: <%= ENV['DATABASE_PASSWORD'] %>
   socket: /var/lib/mysql/mysql.sock
 
+<% db_type = ENV.fetch("DB_TYPE") { 'no_docker' } %>
 default: &default
-  <<: *<%= ENV.fetch("DB_TYPE") { 'no_docker' } %>
+  <% if db_type == 'docker' %>
+  <<: *docker
+  <% else %>
+  <<: *no_docker
+  <% end %>
   adapter: mysql2
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
@@ -30,5 +35,7 @@ test:
 
 production:
   <<: *default
-  <<: *<%= ENV.fetch("DB_TYPE") { 'no_docker_production' } %>
+  <% unless db_type == 'docker' %>
+  <<: *no_docker_production
+  <% end %>
   database: cloud_reminder_production

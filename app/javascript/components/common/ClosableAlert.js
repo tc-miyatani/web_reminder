@@ -12,7 +12,8 @@ const useStyles = makeStyles(() => ({
     display: 'none',
   },
   alert: {
-    margin: '20px',
+    margin: '20px auto',
+    maxWidth: '800px',
   },
 }));
 

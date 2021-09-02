@@ -1,0 +1,2 @@
+module Reminders::MailsHelper
+end

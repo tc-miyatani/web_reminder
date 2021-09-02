@@ -12,6 +12,8 @@ import TokenInput from "common/TokenInput";
 import MessageDialog from "common/MessageDialog";
 import ButtonToggleLoading from "common/ButtonToggleLoading";
 import ConfirmDialog from "common/ConfirmDialog";
+import MailsEditForm from "form/MailsEditForm";
+import MailAddForm from "form/MailAddForm";
 import axios from 'modules/axios_with_csrf';
 
 const useStyles = makeStyles((theme) => ({
@@ -110,10 +112,10 @@ const MyAccount = (props) => {
   };
 
   const account_type = () => {
-    if (props.user_auth_model.email) {
+    if (+props.user.auth_type === 1) {
       return (
         <>
-          <span>アカウントタイプ： メールアカウント({ props.user_auth_model.email })</span>
+          <span>アカウントタイプ： メールアカウント({ props.user.user_auth_mail.email })</span>
         </>
       );
     } else {
@@ -153,6 +155,9 @@ const MyAccount = (props) => {
             </CardActions>
           </form>
         </Card>
+
+        <MailsEditForm {...props} setIsLoading={setIsLoading} isLoading={isLoading} />
+        <MailAddForm {...props} setIsLoading={setIsLoading} isLoading={isLoading} />
 
         <Card className={classes.container}>
           <CardHeader title="アカウント削除"  align="center" />
