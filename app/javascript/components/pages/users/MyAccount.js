@@ -18,17 +18,13 @@ import axios from 'modules/axios_with_csrf';
 
 const useStyles = makeStyles((theme) => ({
   wrap: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    minHeight: 'calc(100vh - 132px)', // 132px: header 64px + footer (20+24*2)px
+    margin: '30px 0',
   },
   container: {
     width: '100%',
     maxWidth: '600px',
     '&:first-child': {
-      marginBottom: '40px',
+      marginBottom: '30px',
     }
   },
   actions: {
