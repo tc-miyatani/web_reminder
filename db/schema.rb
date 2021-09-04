@@ -82,7 +82,7 @@ ActiveRecord::Schema.define(version: 2021_09_02_050801) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["confirmation_token"], name: "index_user_mails_on_confirmation_token", unique: true
-    t.index ["email"], name: "index_user_mails_on_email", unique: true
+    t.index ["email", "user_id"], name: "index_user_mails_on_email_and_user_id", unique: true
     t.index ["user_id"], name: "index_user_mails_on_user_id"
   end
 

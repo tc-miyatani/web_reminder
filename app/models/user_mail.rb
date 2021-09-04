@@ -1,7 +1,7 @@
 class UserMail < ApplicationRecord
   belongs_to :user
 
-  validates :email, presence: true, uniqueness: true
+  validates :email, presence: true, uniqueness: { scope: :user_id }
 
   def generate_token
     SecureRandom.urlsafe_base64

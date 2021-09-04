@@ -14,7 +14,7 @@ class DeviseCreateUserMails < ActiveRecord::Migration[6.0]
       t.timestamps null: false
     end
 
-    add_index :user_mails, :email,                unique: true
+    add_index :user_mails, [:email, :user_id],    unique: true
     add_index :user_mails, :confirmation_token,   unique: true
   end
 end
