@@ -1,7 +1,7 @@
 import React, { createRef, useState } from "react";
 import PropTypes from "prop-types";
 
-import ReminderForm from "ReminderForm";
+import ReminderForm from "form/ReminderForm";
 import MessageDialog from "common/MessageDialog";
 import ButtonToggleLoading from "common/ButtonToggleLoading";
 

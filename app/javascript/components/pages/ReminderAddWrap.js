@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { makeStyles } from '@material-ui/core/styles';
-import ReminderAddForm from "ReminderAddForm";
+import ReminderAddForm from "form/ReminderAddForm";
 
 const useStyles = makeStyles(() => ({
   wrap: {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'modules/axios_with_csrf';
-import ReminderEditForm from "ReminderEditForm";
+import ReminderEditForm from "form/ReminderEditForm";
 import SimpleLayout from "shares/SimpleLayout";
 
 const useStyles = makeStyles(() => ({

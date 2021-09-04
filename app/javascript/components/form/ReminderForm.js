@@ -10,7 +10,7 @@ import {
 import RepeatType from 'reminder_add/RepeatType';
 import RepeatTypeContents from "reminder_add/RepeatTypeContents";
 import NotificationTime from 'reminder_add/NotificationTime';
-import MyTextField from "./common/MyTextField";
+import MyTextField from "common/MyTextField";
 
 const useStyles = makeStyles((theme) => ({
   container: {
