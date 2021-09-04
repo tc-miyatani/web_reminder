@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_02_050801) do
+ActiveRecord::Schema.define(version: 2021_09_04_155756) do
 
   create_table "notification_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.datetime "notification_time", null: false
@@ -86,6 +86,16 @@ ActiveRecord::Schema.define(version: 2021_09_02_050801) do
     t.index ["user_id"], name: "index_user_mails_on_user_id"
   end
 
+  create_table "user_providers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "provider_name", null: false
+    t.string "provider_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id", "provider_id", "provider_name"], name: "idx_user_providers_user_id_provider_id_name", unique: true
+    t.index ["user_id"], name: "index_user_providers_on_user_id"
+  end
+
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "nickname", default: "", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -98,4 +108,5 @@ ActiveRecord::Schema.define(version: 2021_09_02_050801) do
   add_foreign_key "user_auth_mails", "users"
   add_foreign_key "user_auth_providers", "users"
   add_foreign_key "user_mails", "users"
+  add_foreign_key "user_providers", "users"
 end
