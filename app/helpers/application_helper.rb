@@ -24,6 +24,7 @@ module ApplicationHelper
           user_auth_mail: {},
           user_auth_provider: {},
           user_mails: {},
+          user_providers: {},
         },
         except: []
       )

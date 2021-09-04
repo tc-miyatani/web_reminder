@@ -85,8 +85,8 @@ const MailsEditForm = (props) => {
             size="medium"
           >
             <TableBody>
-            {+props.user.auth_type == 2 && (
-              <TableRow hover>
+            {props.user.user_providers.map(user_provider => (
+              <TableRow key={user_provider.id} hover>
                 <TableCell align="center">
                   LINE
                 </TableCell>
@@ -94,10 +94,21 @@ const MailsEditForm = (props) => {
                 <Chip label="認証済み" color="primary" variant="outlined" size="small" onDelete={()=>{}} deleteIcon={<DoneIcon />} />
                 </TableCell>
                 <TableCell align="right">
-                  <Button size="small" variant="contained" disabled>削除不可</Button>
+                  {+props.user.auth_type == 2 && user_provider.provider_id == props.user.user_auth_provider.provider_id ?
+                    (
+                      <Button size="small" variant="contained" disabled>削除不可</Button>
+                    )
+                    :
+                    (
+                      <ButtonToggleLoading color="secondary" isLoading={props.isLoading} onClick={()=>{}}>
+                        削除
+                      </ButtonToggleLoading>
+                    )
+                  }
                 </TableCell>
+
               </TableRow>
-            )}
+            ))}
             {props.user.user_mails.map(user_mail => (
               <TableRow key={user_mail.id} hover>
                 <TableCell align="center">
