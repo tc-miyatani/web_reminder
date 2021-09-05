@@ -1,5 +1,7 @@
 class UserMail < ApplicationRecord
   belongs_to :user
+  has_many :reminder_user_mails, dependent: :destroy
+  has_many :reminders, through: :reminder_user_mails
 
   validates :email, presence: true, uniqueness: { scope: :user_id }
 
