@@ -31,7 +31,7 @@ const NotificationDate = (props) => {
         format="yyyy-MM-dd"
         margin="normal"
         id="notification-date"
-        name="reminder[notification_date]"
+        name="reminder_form[notification_date]"
         label="通知日"
         value={props.reminder.notification_date}
         onChange={handleChange}

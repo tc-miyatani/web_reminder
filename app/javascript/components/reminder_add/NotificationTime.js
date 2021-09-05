@@ -27,7 +27,7 @@ const NotificationTime = (props) => {
         <KeyboardTimePicker
           margin='normal'
           id='notification-time'
-          name='reminder[notification_time]'
+          name='reminder_form[notification_time]'
           format="HH:mm"
           label='通知時間'
           value={props.reminder.notification_time}

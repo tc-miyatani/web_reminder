@@ -79,22 +79,45 @@ const MailsEditForm = (props) => {
       <Card className={classes.container}>
         <CardHeader title="通知先の管理"  align="center" />
         <CardContent>
-
         <TableContainer>
           <Table
             // className={classes.table}
             size="medium"
           >
             <TableBody>
+            {props.user.user_providers.map(user_provider => (
+              <TableRow key={user_provider.id} hover>
+                <TableCell align="center">
+                  LINE
+                </TableCell>
+                <TableCell align="right">
+                <Chip label="認証済み" color="primary" variant="outlined" size="small" onDelete={()=>{}} deleteIcon={<DoneIcon />} />
+                </TableCell>
+                <TableCell align="right">
+                  {+props.user.auth_type == 2 && user_provider.provider_id == props.user.user_auth_provider.provider_id ?
+                    (
+                      <Button size="small" variant="contained" disabled>削除不可</Button>
+                    )
+                    :
+                    (
+                      <ButtonToggleLoading color="secondary" isLoading={props.isLoading} onClick={()=>{}}>
+                        削除
+                      </ButtonToggleLoading>
+                    )
+                  }
+                </TableCell>
+
+              </TableRow>
+            ))}
             {props.user.user_mails.map(user_mail => (
               <TableRow key={user_mail.id} hover>
-                <TableCell align="right">
+                <TableCell align="center">
                   {user_mail.email}
                 </TableCell>
                 <TableCell align="right">
                   {!!user_mail.confirmed_at ?
                     (
-                      <Chip label="認証済み" color="primary" variant="outlined" size="small" deleteIcon={<DoneIcon />} />
+                      <Chip label="認証済み" color="primary" variant="outlined" size="small" onDelete={()=>{}} deleteIcon={<DoneIcon />} />
                     )
                     :
                     (
@@ -105,7 +128,7 @@ const MailsEditForm = (props) => {
                   }
                 </TableCell>
                 <TableCell align="right">
-                  {user_mail.email == props.user.user_auth_mail.email ?
+                  {+props.user.auth_type == 1 && user_mail.email == props.user.user_auth_mail.email ?
                     (
                       <Button size="small" variant="contained" disabled>削除不可</Button>
                     )

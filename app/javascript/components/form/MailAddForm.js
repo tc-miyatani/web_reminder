@@ -26,6 +26,10 @@ const MailAddForm = (props) => {
   const classes = useStyles();
 
   const formRef = createRef();
+  const [emailValue, setEmailValue] = useState('');
+  const handleEmailChange = (event) => {
+    setEmailValue(event.target.value);
+  };
 
   const [isEmailError, setIsEmailError] = useState(false);
   const [emailErrorMessage, setEmailErrorMessage] = useState('');
@@ -44,7 +48,7 @@ const MailAddForm = (props) => {
         console.log(res.data);
         if (res.data?.is_success){
           setDialogMessage('メールアドレスにメールを送信しました！メールに記載されている認証用URLから登録を完了してください！');
-          formRef.current.querySelector('#add-email').value = '';
+          setEmailValue('');
         } else {
           const err_msg = res.data?.errors.join('!') + '!';
                         setDialogMessage(err_msg);
@@ -53,6 +57,7 @@ const MailAddForm = (props) => {
         setOpen(true);
       })
       .catch(error => {
+        console.error(error);
         setDialogMessage('通信エラーが発生しました！');
         props.setIsLoading(false);
         setOpen(true);
@@ -81,6 +86,8 @@ const MailAddForm = (props) => {
                 autoComplete="email"
                 error={isEmailError}
                 helperText={emailErrorMessage}
+                value={emailValue}
+                onChange={handleEmailChange}
               />
             </CardContent>
             <CardActions className={classes.actions}>

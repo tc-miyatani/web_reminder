@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'modules/axios_with_csrf';
-import ReminderEditForm from "ReminderEditForm";
+import ReminderEditForm from "form/ReminderEditForm";
 import SimpleLayout from "shares/SimpleLayout";
 
 const useStyles = makeStyles(() => ({
@@ -10,7 +10,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const ReminderList = () => {
+const ReminderList = (props) => {
   const classes = useStyles();
 
   const [reminders, setReminders] = useState([]);
@@ -64,7 +64,7 @@ const ReminderList = () => {
       <>
         { reminders.map(reminder => {
           return (
-            <ReminderEditForm key={reminder.id} reminder={reminder}
+            <ReminderEditForm key={reminder.id} reminder={reminder} user={props.user}
                               onChange={handleChange} onDelete={handleDelete}
             />
           );

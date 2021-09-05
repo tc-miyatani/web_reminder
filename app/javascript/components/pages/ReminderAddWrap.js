@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { makeStyles } from '@material-ui/core/styles';
-import ReminderAddForm from "ReminderAddForm";
+import ReminderAddForm from "form/ReminderAddForm";
 
 const useStyles = makeStyles(() => ({
   wrap: {
@@ -8,7 +8,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const ReminderAddWrap = () => {
+const ReminderAddWrap = (props) => {
   const classes = useStyles();
 
   const [reminder, setReminder] = useState({
@@ -16,14 +16,14 @@ const ReminderAddWrap = () => {
     message: null,
     notification_date: null,
     notification_time: null,
-    weekdays: null,
+    weekday_ids: null,
     repeat_type_id: null,
   });
   const handleChange = obj => setReminder({...reminder, ...obj});
 
   return (
     <>
-      <ReminderAddForm reminder={reminder} onChange={handleChange} />
+      <ReminderAddForm reminder={reminder} onChange={handleChange} {...props} />
       <div className={classes.wrap}></div>
     </>
   );

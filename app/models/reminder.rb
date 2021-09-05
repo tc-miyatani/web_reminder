@@ -1,9 +1,12 @@
 class Reminder < ApplicationRecord
-  attr_accessor :notification_time, :notification_date
-
   belongs_to :user
-  has_many   :notification_weekdays, dependent: :destroy
-  accepts_nested_attributes_for :notification_weekdays, allow_destroy: true
+  has_many :notification_weekdays, dependent: :destroy
+  has_many :reminder_user_mails, dependent: :destroy
+  has_many :user_mails, through: :reminder_user_mails
+  has_many :reminder_user_providers, dependent: :destroy
+  has_many :user_providers, through: :reminder_user_providers
+  has_many :reminder_weekdays, dependent: :destroy
+  has_many :weekdays, through: :reminder_weekdays
 
   extend ActiveHash::Associations::ActiveRecordExtensions
   belongs_to :repeat_type
@@ -14,31 +17,20 @@ class Reminder < ApplicationRecord
     validates :repeat_type_id, inclusion: { in: RepeatType.pluck(:id) }
     validates :user
   end
-  validate :cannot_reminder_to_past
-  validate :cannot_empty_weekdays_repeat_weekly
 
   # アソシエーション関係のメソッド
   # --------------------------------------------------------------------------------------------
 
-  def weekdays=(wday_nums)
-    unless wday_nums.class == Array
-      return
-    end
-    @weekdays = wday_nums.map(&:to_i)
-    self.notification_weekdays&.destroy_all
-    self.notification_weekdays_attributes = wday_nums.map{ |wday| {weekday_id: wday} }
-  end
-
-  def weekdays
-    if self.repeat_type != RepeatType.find_by(name: 'repeat-weekly')
-      nil
-    elsif defined?(@weekdays)
-      @weekdays 
-    else
-      @weekdays =self.notification_weekdays.map(&:weekday_id)
-      # @weekdays = self.notification_weekdays.pluck(:weekday_id) # TODO: どっちが良いか後で調べる
-    end
-  end
+  # def weekdays
+  #   if self.repeat_type != RepeatType.find_by(name: 'repeat-weekly')
+  #     nil
+  #   elsif defined?(@weekdays)
+  #     @weekdays 
+  #   else
+  #     @weekdays =self.notification_weekdays.map(&:weekday_id)
+  #     # @weekdays = self.notification_weekdays.pluck(:weekday_id) # TODO: どっちが良いか後で調べる
+  #   end
+  # end
 
   def user_auth_type
     if defined?(@user_auth_type)
@@ -68,23 +60,11 @@ class Reminder < ApplicationRecord
     reminders = self.joins(:user).where(user_id: user_id)
                     .order(id: 'DESC')
                     .to_json(include: {
-                              notification_weekdays: { only: :weekday_id }
-                            }, except: [:user_id], methods: :weekdays) # TODO: weekdaysどっちかだけで良い
+                              user_mails: {},
+                              user_providers: {},
+                              weekdays: {},
+                            }, except: [:user_id], methods: :weekday_ids)
     { reminders: JSON.parse(reminders) }
-  end
-
-  # バリデーション関係のメソッド
-  # ---------------------------------------------------------------------------------------------
-  def cannot_reminder_to_past
-    if self.notification_datetime.present? && self.notification_datetime.past?
-      errors.add(:notification_datetime, ': 過去の日時に通知することはできません')
-    end
-  end
-
-  def cannot_empty_weekdays_repeat_weekly
-    if self.repeat_type == RepeatType.find_by(name: 'repeat-weekly') && self.notification_weekdays.blank?
-      errors.add(:notification_datetime, ': 曜日を選択してください')
-    end
   end
 
   # 通知関係のメソッド

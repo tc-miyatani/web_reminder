@@ -8,4 +8,6 @@ class User < ApplicationRecord
   has_one :user_auth_provider, dependent: :destroy
   has_many :reminders,         dependent: :destroy
   has_many :user_mails,        dependent: :destroy
+  # LINE以外のソーシャルログインを追加することを想定してhas_manyにしておく
+  has_many :user_providers,    dependent: :destroy
 end

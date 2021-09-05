@@ -5,6 +5,31 @@ class ReminderService
 
   WDAYS = [:sunday, :monday, :tuesday, :wednesday, :thursday, :friday, :saturday]
 
+  def self.calc_first_time(reminder_form, base_time=Time.current)
+    if reminder_form.notification_time.blank?
+      return
+    end
+
+    case reminder_form.repeat_type
+    when RepeatType.find_by(name: 'once') then
+      next_time = reminder_form.notification_date + ' ' + reminder_form.notification_time
+    when RepeatType.find_by(name: 'repeat-daily') then
+      next_time = self.daily_next_time(reminder_form.notification_time)
+    when RepeatType.find_by(name: 'repeat-weekly') then
+      if reminder_form.notification_weekdays.blank?
+        return
+      else
+        next_time = self.weekly_next_time(
+                                  reminder_form.notification_time,
+                                  reminder_form.notification_weekdays
+                                )
+      end
+    else
+      raise RuntimeError.new('不正なリピートタイプです')
+    end
+    next_time
+  end
+
   # 次の通知日時を算出して返す
   def self.calc_next_time(reminder, base_time=Time.current)
     if reminder.notification_time.blank?
