@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_04_155756) do
+ActiveRecord::Schema.define(version: 2021_09_05_081608) do
 
   create_table "notification_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.datetime "notification_time", null: false
@@ -31,6 +31,33 @@ ActiveRecord::Schema.define(version: 2021_09_04_155756) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["reminder_id"], name: "index_notification_weekdays_on_reminder_id"
     t.index ["weekday_id", "reminder_id"], name: "index_notification_weekdays_on_weekday_id_and_reminder_id", unique: true
+  end
+
+  create_table "reminder_user_mails", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "reminder_id", null: false
+    t.bigint "user_mail_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["reminder_id"], name: "index_reminder_user_mails_on_reminder_id"
+    t.index ["user_mail_id"], name: "index_reminder_user_mails_on_user_mail_id"
+  end
+
+  create_table "reminder_user_providers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "reminder_id", null: false
+    t.bigint "user_provider_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["reminder_id"], name: "index_reminder_user_providers_on_reminder_id"
+    t.index ["user_provider_id"], name: "index_reminder_user_providers_on_user_provider_id"
+  end
+
+  create_table "reminder_weekdays", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "reminder_id", null: false
+    t.integer "weekday_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["reminder_id"], name: "index_reminder_weekdays_on_reminder_id"
+    t.index ["weekday_id"], name: "fk_rails_c73f16e864"
   end
 
   create_table "reminders", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -103,7 +130,19 @@ ActiveRecord::Schema.define(version: 2021_09_04_155756) do
     t.integer "auth_type", default: 0, null: false
   end
 
+  create_table "weekdays", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "text", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   add_foreign_key "notification_weekdays", "reminders"
+  add_foreign_key "reminder_user_mails", "reminders"
+  add_foreign_key "reminder_user_mails", "user_mails"
+  add_foreign_key "reminder_user_providers", "reminders"
+  add_foreign_key "reminder_user_providers", "user_providers"
+  add_foreign_key "reminder_weekdays", "reminders"
+  add_foreign_key "reminder_weekdays", "weekdays"
   add_foreign_key "reminders", "users"
   add_foreign_key "user_auth_mails", "users"
   add_foreign_key "user_auth_providers", "users"
