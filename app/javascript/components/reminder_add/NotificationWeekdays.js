@@ -25,17 +25,17 @@ const NotificationWeekdays = (props) => {
 
   const classes = useStyles();
 
-  const getVariant = wday => props.reminder.weekdays?.includes(wday) ? 'contained' : 'outlined';
+  const getVariant = wday => props.reminder.weekday_ids?.includes(wday) ? 'contained' : 'outlined';
 
   const makeHandleChange = wday => () => {
-    if (!props.reminder.weekdays) {
-      props.onChange({weekdays: [wday]});
+    if (!props.reminder.weekday_ids) {
+      props.onChange({weekday_ids: [wday]});
       return;
     }
     props.onChange({
-      weekdays: props.reminder.weekdays.includes(wday) ?
-                  props.reminder.weekdays.filter(w => w != wday) :      // ON  to OFF
-                  props.reminder.weekdays.concat(wday).sort((a,b)=>a-b) // OFF to ON
+      weekday_ids: props.reminder.weekday_ids.includes(wday) ?
+                  props.reminder.weekday_ids.filter(w => w != wday) :      // ON  to OFF
+                  props.reminder.weekday_ids.concat(wday).sort((a,b)=>a-b) // OFF to ON
     });
   };
 
@@ -53,7 +53,7 @@ const NotificationWeekdays = (props) => {
       </div>
 
       <Select name="reminder_form[notification_weekdays][]"
-              native multiple value={props.reminder.weekdays||[]} className={classes.hidden}
+              native multiple value={props.reminder.weekday_ids||[]} className={classes.hidden}
       >
         {WEEKDAYS.map((wday_ja, wday) => (
           <option key={wday} value={wday}>{wday_ja}</option>

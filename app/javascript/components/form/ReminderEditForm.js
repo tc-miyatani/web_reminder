@@ -78,7 +78,7 @@ const ReminderEditForm = (props) => {
     <>
       <ReminderForm ref={formRef} onChange={handleChange} isLoading={isLoading}
         title={`リマインダーID: ${props.reminder.id}`}
-        reminder={props.reminder}
+        reminder={props.reminder} user={props.user}
       >
         <ButtonToggleLoading color="primary" isLoading={isLoading} onClick={handleUpdate}>
           更新

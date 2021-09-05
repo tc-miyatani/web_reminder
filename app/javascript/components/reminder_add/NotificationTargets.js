@@ -39,19 +39,20 @@ const useStyles = makeStyles((theme) => ({
 
 const NotificationTargets = (props) => {
   const classes = useStyles();
+  console.log(props);
 
   const [checkedItems, setCheckedItems] = useState([]);
   const [targetMails, setTargetMails] = useState([]);
   const [targetProviders, setTargetProvides] = useState([]);
 
   const itemList = props.user.user_providers.map(user_provider=>{
-        return user_provider.provider_name.toUpperCase()
-      })
-      .concat(
-        props.user.user_mails
-          .filter(user_mail=>user_mail.confirmed_at)
-          .map(user_mail=>user_mail.email)
-      );
+                      return user_provider.provider_name.toUpperCase()
+                    })
+                    .concat(
+                      props.user.user_mails
+                        .filter(user_mail=>user_mail.confirmed_at)
+                        .map(user_mail=>user_mail.email)
+                    );
 
   const setHiddenSelect = (items) => {
     const mail_ids = props.user.user_mails.filter(user_mail=>items.includes(user_mail.email))
@@ -72,8 +73,21 @@ const NotificationTargets = (props) => {
   };
 
   useEffect(() => {
-    setCheckedItems(itemList);
-    setHiddenSelect(itemList);
+    if (props.reminder?.id) {
+      const targets = props.reminder.user_providers.map(user_provider=>{
+                        return user_provider.provider_name.toUpperCase()
+                      })
+                      .concat(
+                        props.reminder.user_mails
+                          .filter(user_mail=>user_mail.confirmed_at)
+                          .map(user_mail=>user_mail.email)
+                      );
+      setCheckedItems(targets);
+      setHiddenSelect(targets);
+    } else {
+      setCheckedItems(itemList);
+      setHiddenSelect(itemList);
+    }
   }, []);
 
   return (
@@ -115,7 +129,7 @@ const NotificationTargets = (props) => {
           <option key={v} value={v}>{v}</option>
         ))}
       </Select>
-      <Select native multiple name="reminder_form[target_providers]" value={targetProviders} 
+      <Select native multiple name="reminder_form[target_providers][]" value={targetProviders} 
         className={classes.hidden}
       >
         {targetProviders.map(v => (

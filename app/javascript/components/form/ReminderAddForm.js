@@ -18,8 +18,8 @@ const ReminderAddForm = (props) => {
     console.log(formData);
 
     if (
-      formData.get('reminder[repeat_type_id]') === '3' &&
-      formData.getAll('reminder[notification_weekdays_attributes][][weekday_id]').length === 0
+      formData.get('reminder_form[repeat_type_id]') === '3' &&
+      formData.getAll('reminder_form[notification_weekdays]').length === 0
     ) {
       setApiResponse({msg: '曜日を選択してください！', is_success: false});
       setOpen(true);

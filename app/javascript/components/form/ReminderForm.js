@@ -43,7 +43,7 @@ const ReminderForm = forwardRef((props, ref) => {
                 <>
                   <RepeatTypeContents reminder={props.reminder} onChange={handleChange} />
                   <NotificationTime reminder={props.reminder} onChange={handleChange} />
-                  <TextField multiline id="reminder[message]" defaultValue={props.reminder.message}
+                  <TextField multiline name="reminder_form[message]" defaultValue={props.reminder.message}
                     fullWidth variant="outlined"
                     label="通知メッセージ" className={classes.message}
                   />

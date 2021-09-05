@@ -16,7 +16,7 @@ const ReminderAddWrap = (props) => {
     message: null,
     notification_date: null,
     notification_time: null,
-    weekdays: null,
+    weekday_ids: null,
     repeat_type_id: null,
   });
   const handleChange = obj => setReminder({...reminder, ...obj});

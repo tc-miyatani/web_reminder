@@ -24,7 +24,7 @@ const MyRouter = (props) => {
       <Switch>
         <Route exact path="/">
           <AppLayout {...props}>
-            { props.is_sign_in ? <ReminderList /> : <TopPage {...props} /> }
+            { props.is_sign_in ? <ReminderList {...props} /> : <TopPage {...props} /> }
           </AppLayout>
         </Route>
         <Route exact path="/reminders/new">
