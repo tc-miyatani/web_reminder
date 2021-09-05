@@ -28,7 +28,7 @@ const MyRouter = (props) => {
           </AppLayout>
         </Route>
         <Route exact path="/reminders/new">
-          <AppLayout {...props}><ReminderAddWrap /></AppLayout>
+          <AppLayout {...props}><ReminderAddWrap {...props} /></AppLayout>
         </Route>
         <Route exact path="/users/sign_up" render={() => <SignUp {...props} />} />
         <Route exact path="/users/sign_in" render={() => <SignIn {...props} />} />

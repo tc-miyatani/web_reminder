@@ -35,7 +35,7 @@ const RepeatType = (props) => {
         <Select
           labelId="repeat-type-label"
           id="repeat-type"
-          name="reminder[repeat_type_id]"
+          name="reminder_form[repeat_type_id]"
           value={String(props.reminder.repeat_type_id || '')}
           onChange={handleChange}
         >

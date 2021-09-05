@@ -47,6 +47,7 @@ const ReminderForm = forwardRef((props, ref) => {
                     fullWidth variant="outlined"
                     label="通知メッセージ" className={classes.message}
                   />
+                  <NotificationTargets {...props} />
                 </>
               }
             </form>

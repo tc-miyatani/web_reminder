@@ -8,7 +8,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const ReminderAddWrap = () => {
+const ReminderAddWrap = (props) => {
   const classes = useStyles();
 
   const [reminder, setReminder] = useState({
@@ -23,7 +23,7 @@ const ReminderAddWrap = () => {
 
   return (
     <>
-      <ReminderAddForm reminder={reminder} onChange={handleChange} />
+      <ReminderAddForm reminder={reminder} onChange={handleChange} {...props} />
       <div className={classes.wrap}></div>
     </>
   );

@@ -52,7 +52,7 @@ const NotificationWeekdays = (props) => {
         </ButtonGroup>
       </div>
 
-      <Select name="reminder[notification_weekdays_attributes][][weekday_id]"
+      <Select name="reminder_form[notification_weekdays][]"
               native multiple value={props.reminder.weekdays||[]} className={classes.hidden}
       >
         {WEEKDAYS.map((wday_ja, wday) => (
