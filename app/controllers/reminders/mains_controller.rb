@@ -21,7 +21,7 @@ class Reminders::MainsController < ApplicationController
   end
 
   def update
-    reminder_form = user_id: current_user.id.find(params[:id], user_id: current_user.id)
+    reminder_form = ReminderForm.find(params[:id], current_user.id)
     unless reminder_form.update(reminder_params)
       render json: {
         is_success: false,
