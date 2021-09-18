@@ -1,19 +1,18 @@
 class ReminderNotification
-  DEFAULT_SEND_REMINDERS = {
-    mail_message: MailMessage,
-    line_message: LineMessage
+  PROVIDER_MESSAGES = {
+    mail: MailMessage,
+    line: LineMessage
   }
 
-  def self.send_reminder(reminder, send_reminders={})
-    if reminder.user_auth_type == 'user_auth_mail'
-      reminder_type = :mail_message
-    elsif reminder.user_auth_model.provider_name == 'line'
-      reminder_type = :line_message
-    else
-      raise RuntimeError.new('プロバイダー名に異常があります')
+  def self.send_reminder(reminder, provider_messages=self::PROVIDER_MESSAGES)
+    reminder.reminder_user_mails.each do |reminder_user_mail|
+      provider_message = provider_messages[:mail]
+      provider_message.send_reminder(reminder_user_mail)
     end
-
-    reminder_class = send_reminders[reminder_type] || DEFAULT_SEND_REMINDERS[reminder_type]
-    reminder_class.send_reminder(reminder)
+    reminder.reminder_user_providers.each do |reminder_user_provider|
+      reminder_name = reminder_user_provider.user_provider.provider_name
+      provider_message = provider_messages[reminder_name.to_sym]
+      provider_message.send_reminder(reminder_user_provider)
+    end
   end
 end

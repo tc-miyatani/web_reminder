@@ -9,12 +9,12 @@ class LineMessage
     messages: [{ type: 'text', text: '' }]
   }
 
-  def self.send_reminder(reminder)
-    user_auth_provider = reminder.user.user_auth_provider
+  def self.send_reminder(reminder_user_provider)
+    user_provider =reminder_user_provider.user_provider
 
     post_data = POST_FORMAT.deep_dup
-    post_data[:to][0] = user_auth_provider.provider_id
-    post_data[:messages][0][:text] = reminder.message
+    post_data[:to][0] = user_provider.provider_id
+    post_data[:messages][0][:text] = reminder_user_provider.reminder.message
 
     uri = URI.parse(MESSAGE_API_URI)
     http = Net::HTTP.new(uri.host, uri.port)

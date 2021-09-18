@@ -75,20 +75,26 @@ class Reminder < ApplicationRecord
   end
 
   def save_log(log_class=NotificationLog)
-    if self.user_auth_type == 'user_auth_mail'
+    logs = []
+    self.reminder_user_mails.each do |reminder_user_mail|
       log_provider_name = 'mail'
-      log_provider_id   = self.user.user_auth_mail.email
-    else
-      log_provider_name = self.user.user_auth_provider.provider_name
-      log_provider_id   = self.user.user_auth_provider.provider_id
+      log_provider_id   = reminder_user_mail.user_mail.email
+      logs << [log_provider_name, log_provider_id]
     end
-    log_class.create(
-      notification_time: self.notification_datetime,
-      message: self.message,
-      provider_name: log_provider_name,
-      provider_id:   log_provider_id,
-      reminder_id: self.id
-    )
+    self.reminder_user_providers.each do |reminder_user_provider|
+      log_provider_name = reminder_user_provider.user_provider.provider_name
+      log_provider_id   = reminder_user_provider.user_provider.provider_id
+      logs << [log_provider_name, log_provider_id]
+    end
+    logs.each do |log_provider_name, log_provider_id|
+      log_class.create(
+        notification_time: self.notification_datetime,
+        message: self.message,
+        provider_name: log_provider_name,
+        provider_id:   log_provider_id,
+        reminder_id: self.id
+      )
+    end
   end
 
   def update_or_delete_reminder
@@ -104,7 +110,8 @@ class Reminder < ApplicationRecord
   def self.find_all_should_send
     self.includes([
           :notification_weekdays,
-          user: [:user_auth_provider, :user_auth_mail]
+          reminder_user_mails: [:user_mail],
+          reminder_user_providers: [:user_provider]
         ])
         .where('notification_datetime <= ?', Time.current)
   end
